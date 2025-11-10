@@ -17,6 +17,7 @@ const translations = {
       selected: "Selected"
     },
     packages: {
+      title: "Available Packages",
       browse: "Available Packages",
       description: "Select packages to include in your installation script",
       search: "Search packages...",
@@ -74,6 +75,7 @@ const translations = {
       selected: "Seçildi"
     },
     packages: {
+      title: "Mevcut Paketler",
       browse: "Mevcut Paketler",
       description: "Kurulum scriptinize dahil edilecek paketleri seçin",
       search: "Paket ara...",

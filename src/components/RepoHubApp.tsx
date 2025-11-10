@@ -2,10 +2,10 @@
 
 import { useState } from 'react'
 import { LocaleProvider } from '@/contexts/LocaleContext'
-import { Header } from '@/components/Header'
-import { PlatformSelector } from '@/components/PlatformSelector'
-import { PackageBrowser } from '@/components/PackageBrowser'
-import { SelectionManager } from '@/components/SelectionManager'
+import { Header } from './Header'
+import { PlatformSelector } from './PlatformSelector'
+import { PackageBrowserV2 } from './PackageBrowserV2'
+import { SelectionManager } from './SelectionManager'
 import { ScriptPreview } from '@/components/ScriptPreview'
 import { generateScript } from '@/lib/scriptGenerator'
 import { useLocale } from '@/contexts/LocaleContext'
@@ -86,7 +86,7 @@ function RepoHubAppContent() {
           />
 
           {/* Package Browser */}
-          <PackageBrowser
+          <PackageBrowserV2
             selectedPlatform={selectedPlatform}
             selectedPackages={selectedPackages}
             onPackageToggle={handlePackageToggle}

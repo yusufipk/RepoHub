@@ -40,7 +40,7 @@ export function ScriptPreview({
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `install-packages-${selectedPlatform.id}.sh`
+    a.download = `install-packages-${selectedPlatform?.id || 'unknown'}.sh`
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
@@ -48,18 +48,22 @@ export function ScriptPreview({
   }
 
   const getScriptLanguage = () => {
-    switch (selectedPlatform.id) {
+    switch (selectedPlatform?.id) {
       case 'windows':
         return 'powershell'
+      case 'macos':
+        return 'bash'
       default:
         return 'bash'
     }
   }
 
   const getScriptExtension = () => {
-    switch (selectedPlatform.id) {
+    switch (selectedPlatform?.id) {
       case 'windows':
         return '.ps1'
+      case 'macos':
+        return '.sh'
       default:
         return '.sh'
     }
@@ -76,7 +80,7 @@ export function ScriptPreview({
                 <span>Installation Script</span>
               </CardTitle>
               <CardDescription>
-                Idempotent script for {selectedPlatform.name} using {selectedPlatform.packageManager}
+                Idempotent script for {selectedPlatform?.name || 'Unknown Platform'} using {selectedPlatform?.packageManager || 'Unknown Package Manager'}
               </CardDescription>
             </div>
             <Button variant="outline" onClick={onClose}>
@@ -162,7 +166,7 @@ export function ScriptPreview({
             <h4 className="font-medium text-blue-900 mb-2">How to use:</h4>
             <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
               <li>Download the script file to your target machine</li>
-              <li>Make it executable (for Linux/macOS): <code className="bg-blue-100 px-1 rounded">chmod +x install-packages-{selectedPlatform.id}{getScriptExtension()}</code></li>
+              <li>Make it executable (for Linux/macOS): <code className="bg-blue-100 px-1 rounded">chmod +x install-packages-{selectedPlatform?.id || 'unknown'}{getScriptExtension()}</code></li>
               <li>Run the script with appropriate permissions</li>
               <li>The script will automatically handle repository setup and package installation</li>
             </ol>

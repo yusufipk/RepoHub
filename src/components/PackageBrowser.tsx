@@ -1,11 +1,11 @@
 "use client"
 
-import { useState, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { mockPackages, categories, licenses } from '@/data/mockData'
+import { apiClient } from '@/lib/api/client'
 import { useLocale } from '@/contexts/LocaleContext'
 import { Package, FilterOptions, Platform } from '@/types'
 import { Search, Package as PackageIcon, Terminal, Monitor } from 'lucide-react'
@@ -24,18 +24,53 @@ export function PackageBrowser({
   onFiltersChange 
 }: PackageBrowserProps) {
   const { t } = useLocale()
+  const [packages, setPackages] = useState<Package[]>([])
+  const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [filters, setFilters] = useState<FilterOptions>({
-    platforms: [],
-    categories: [],
-    licenses: [],
-    types: [],
-    repositories: [],
-    searchQuery: ''
+    platform_id: selectedPlatform?.id || '',
+    type: '',
+    repository: '',
+    search: '',
+    limit: 50,
+    offset: 0
   })
 
+  // Load packages when platform changes
+  useEffect(() => {
+    const loadPackages = async () => {
+      if (!selectedPlatform) {
+        setPackages([])
+        setLoading(false)
+        return
+      }
+
+      setLoading(true)
+      try {
+        const result = await apiClient.getPackages({
+          platform_id: selectedPlatform.id,
+          search: searchQuery,
+          type: filters.type || undefined,
+          repository: filters.repository || undefined,
+          limit: filters.limit,
+          offset: filters.offset
+        })
+        setPackages(result.packages)
+      } catch (error) {
+        console.error('Failed to load packages:', error)
+        // Fallback to mock data if API fails
+        const { mockPackages } = await import('@/data/mockData')
+        setPackages(mockPackages.filter(pkg => pkg.platform === selectedPlatform.id))
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadPackages()
+  }, [selectedPlatform, searchQuery, filters.type, filters.repository])
+
   const filteredPackages = useMemo(() => {
-    return mockPackages.filter(pkg => {
+    return packages.filter(pkg => {
       // Platform filter
       if (selectedPlatform && pkg.platform !== selectedPlatform.id) {
         return false
@@ -149,28 +184,52 @@ export function PackageBrowser({
                 <SelectValue placeholder={t('packages.filters.repository')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="official">{t('packages.filters.official')}</SelectItem>
-                <SelectItem value="third_party">{t('packages.filters.third_party')}</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Package List */}
-      <Card>
-        <CardHeader>
-          <CardTitle>{t('packages.browse')} ({filteredPackages.length})</CardTitle>
-          <CardDescription>
             {t('packages.description')}
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {filteredPackages.map((pkg) => (
-              <div
-                key={pkg.id}
-                className={`p-4 border rounded-lg transition-colors ${
+        <CardContent className="pt-0">
+          <div className="text-center py-8 text-muted-foreground">
+            Loading packages...
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  return (
+    <Card className="w-full">
+      <CardHeader className="pb-4">
+        <CardTitle className="text-lg flex items-center gap-2">
+          <PackageIcon className="h-5 w-5" />
+          {t('packages.title')}
+          {selectedPlatform && (
+            <span className="text-sm font-normal text-muted-foreground">
+              ({packages.length} packages for {selectedPlatform.name})
+            </span>
+          )}
+        </CardTitle>
+        <CardDescription className="text-sm">
+          {t('packages.description')}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          {/* Filters */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Filters</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {/* Search */}
+                <div className="relative">
+                  <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <input
+                    type="text"
+                    placeholder={t('packages.search')}
+                    className="w-full pl-10 pr-4 py-2 border border-input rounded-md bg-background"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                   isPackageSelected(pkg) 
                     ? 'border-primary bg-primary/5' 
                     : 'border-border hover:bg-secondary/50'

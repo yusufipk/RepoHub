@@ -43,10 +43,10 @@ export class PackageService {
 
     if (search) {
       whereConditions.push(`(
-        to_tsvector('english', p.name) @@ to_tsquery('english', $${paramIndex}) OR
-        to_tsvector('english', p.description) @@ to_tsquery('english', $${paramIndex})
+        p.name ILIKE $${paramIndex} OR
+        p.description ILIKE $${paramIndex}
       )`)
-      values.push(search.split(' ').join(' & '))
+      values.push(`%${search}%`)
       paramIndex++
     }
 
@@ -69,27 +69,26 @@ export class PackageService {
     const countResult = await query(countQuery, values)
     const total = parseInt(countResult.rows[0].total)
 
-    // Get packages with joins
+    // Get packages with joins (simplified)
     const packagesQuery = `
       SELECT 
-        p.*,
+        p.id,
+        p.name,
+        p.description,
+        p.version,
+        p.platform_id,
+        p.type,
+        p.repository,
+        p.popularity_score,
+        p.is_active,
+        p.created_at,
+        p.updated_at,
         pl.name as platform_name,
         pl.package_manager as platform_package_manager,
-        pl.icon as platform_icon,
-        c.name as category_name,
-        l.name as license_name,
-        l.url as license_url,
-        COALESCE(
-          ARRAY_AGG(DISTINCT pt.tag) FILTER (WHERE pt.tag IS NOT NULL),
-          ARRAY[]::VARCHAR[]
-        ) as tags
+        pl.icon as platform_icon
       FROM packages p
       LEFT JOIN platforms pl ON p.platform_id = pl.id
-      LEFT JOIN categories c ON p.category_id = c.id
-      LEFT JOIN licenses l ON p.license_id = l.id
-      LEFT JOIN package_tags pt ON p.id = pt.package_id
       ${whereClause}
-      GROUP BY p.id, pl.name, pl.package_manager, pl.icon, c.name, l.name, l.url
       ${orderClause}
       LIMIT $${paramIndex++} OFFSET $${paramIndex++}
     `
@@ -101,18 +100,12 @@ export class PackageService {
     const packages = packagesResult.rows.map((row: any) => ({
       id: row.id,
       name: row.name,
-      description: row.description,
+      description: row.description || 'No description available',
       version: row.version,
       platform_id: row.platform_id,
-      category_id: row.category_id,
-      license_id: row.license_id,
-      type: row.type,
-      repository: row.repository,
-      homepage_url: row.homepage_url,
-      download_url: row.download_url,
-      last_updated: row.last_updated,
-      downloads_count: row.downloads_count,
-      popularity_score: row.popularity_score,
+      type: row.type || 'cli',
+      repository: row.repository || 'official',
+      popularity_score: row.popularity_score || 0,
       is_active: row.is_active,
       created_at: row.created_at,
       updated_at: row.updated_at,
@@ -122,16 +115,7 @@ export class PackageService {
         package_manager: row.platform_package_manager,
         icon: row.platform_icon
       } : undefined,
-      category: row.category_name ? {
-        id: row.category_id,
-        name: row.category_name
-      } : undefined,
-      license: row.license_name ? {
-        id: row.license_id,
-        name: row.license_name,
-        url: row.license_url
-      } : undefined,
-      tags: row.tags || []
+      tags: [] // Empty tags for now
     }))
 
     return { packages, total }

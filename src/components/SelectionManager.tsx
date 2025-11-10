@@ -73,11 +73,9 @@ export function SelectionManager({
                   {pkg.description}
                 </p>
                 <div className="flex items-center space-x-2 text-xs text-muted-foreground mt-1">
-                  <span>{pkg.platform}</span>
+                  <span>{pkg.type?.toUpperCase() || 'CLI'}</span>
                   <span>•</span>
-                  <span>{pkg.category}</span>
-                  <span>•</span>
-                  <span>{pkg.license}</span>
+                  <span>{pkg.repository || 'official'}</span>
                 </div>
               </div>
               <Button

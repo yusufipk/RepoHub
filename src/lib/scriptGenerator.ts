@@ -13,8 +13,9 @@ export function generateScript(packages: SelectedPackage[], platform: Platform):
 
 function createScriptContent(packages: SelectedPackage[], platform: Platform): string {
   switch (platform.id) {
+    case 'debian':
     case 'ubuntu':
-      return generateUbuntuScript(packages)
+      return generateDebianBasedScript(packages, platform.name)
     case 'fedora':
       return generateFedoraScript(packages)
     case 'arch':
@@ -28,18 +29,18 @@ function createScriptContent(packages: SelectedPackage[], platform: Platform): s
   }
 }
 
-function generateUbuntuScript(packages: SelectedPackage[]): string {
+function generateDebianBasedScript(packages: SelectedPackage[], platformName: string): string {
   const packageNames = packages.map(p => p.name).join(' ')
   
   return `#!/bin/bash
 
-# RepoHub Installation Script for Ubuntu/Debian
+# RepoHub Installation Script for ${platformName}
 # Generated on ${new Date().toISOString()}
 # This script is idempotent and safe to run multiple times
 
 set -e
 
-echo "Starting package installation for Ubuntu/Debian..."
+echo "Starting package installation for ${platformName}..."
 
 # Update package lists
 echo "Updating package lists..."

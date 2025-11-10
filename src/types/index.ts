@@ -3,6 +3,7 @@ export interface Platform {
   name: string
   packageManager: string
   icon: string
+  description?: string
 }
 
 export interface Package {
@@ -10,24 +11,29 @@ export interface Package {
   name: string
   description: string
   version: string
-  category: string
-  license: string
+  category?: string
+  license?: string
   type: 'gui' | 'cli'
-  platform: string
+  platform?: string | Platform
+  platform_id?: string
   repository: 'official' | 'third-party'
-  lastUpdated: string
+  lastUpdated?: string
   downloads?: number
   popularity?: number
-  tags: string[]
+  popularity_score?: number
+  tags?: string[]
 }
 
 export interface FilterOptions {
-  platforms: string[]
-  categories: string[]
-  licenses: string[]
-  types: ('gui' | 'cli')[]
-  repositories: ('official' | 'third-party')[]
-  searchQuery: string
+  platform_id?: string
+  category_id?: number
+  type?: 'gui' | 'cli'
+  repository?: 'official' | 'third-party'
+  search?: string
+  limit?: number
+  offset?: number
+  sort_by?: string
+  sort_order?: 'asc' | 'desc'
 }
 
 export interface SelectedPackage extends Package {
