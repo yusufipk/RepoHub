@@ -9,7 +9,8 @@ const translations = {
     common: {
       title: "RepoHub - Cross-Platform Package Manager",
       subtitle: "Cross-Platform Package Manager",
-      description: "Simplify software installation across Linux, Windows, and macOS with official repositories"
+      description: "Simplify software installation across Linux, Windows, and macOS with official repositories",
+      close: "Close"
     },
     platform: {
       select: "Select Your Platform",
@@ -61,13 +62,33 @@ const translations = {
         "Run the script with appropriate permissions",
         "The script will automatically handle repository setup and package installation"
       ]
+      ,
+      windows_usage: {
+        download_intro: "Download the script file (it will be saved as",
+        file_name: "install-packages-windows.ps1",
+        open_powershell_intro: "Open PowerShell (preferably as Administrator). If you see",
+        disabled_error: "running scripts is disabled on this system",
+        run_one: "run one of the following and then execute the script:",
+        persistent_title: "Persistent (Current User):",
+        persistent_cmd: "Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force",
+        then_run: "then run:",
+        then_run_cmd: ".\\install-packages-windows.ps1",
+        onetime_title: "One-time run (no policy change):",
+        onetime_cmd: "powershell -ExecutionPolicy Bypass -File .\\install-packages-windows.ps1",
+        unblock_title: "If Windows blocked the file, unblock it:",
+        unblock_cmd: "Unblock-File -Path .\\install-packages-windows.ps1",
+        winget_title: "If winget is not found, install 'App Installer' and re-run the script:",
+        store_link_label: "Store link",
+        direct_link_label: "Direct link"
+      }
     }
   },
   tr: {
     common: {
       title: "RepoHub - Çok Platformlu Paket Yöneticisi",
       subtitle: "Çok Platformlu Paket Yöneticisi",
-      description: "Linux, Windows ve macOS'te resmi depoları kullanarak yazılım kurulumunu basitleştirin"
+      description: "Linux, Windows ve macOS'te resmi depoları kullanarak yazılım kurulumunu basitleştirin",
+      close: "Kapat"
     },
     platform: {
       select: "Platformunuzu Seçin",
@@ -119,6 +140,25 @@ const translations = {
         "Scripti uygun izinlerle çalıştırın",
         "Script otomatik olarak depo kurulumunu ve paket kurulumunu yönetecektir"
       ]
+      ,
+      windows_usage: {
+        download_intro: "Script dosyasını indirin (şu adla kaydedilecektir",
+        file_name: "install-packages-windows.ps1",
+        open_powershell_intro: "PowerShell'i açın (tercihen Yönetici olarak). Eğer şu hatayı görürseniz",
+        disabled_error: "running scripts is disabled on this system",
+        run_one: "aşağıdakilerden birini uygulayıp ardından scripti çalıştırın:",
+        persistent_title: "Kalıcı (Mevcut Kullanıcı):",
+        persistent_cmd: "Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force",
+        then_run: "sonra çalıştırın:",
+        then_run_cmd: ".\\install-packages-windows.ps1",
+        onetime_title: "Tek seferlik (politika değiştirmeden):",
+        onetime_cmd: "powershell -ExecutionPolicy Bypass -File .\\install-packages-windows.ps1",
+        unblock_title: "Windows dosyayı engellediyse, engeli kaldırın:",
+        unblock_cmd: "Unblock-File -Path .\\install-packages-windows.ps1",
+        winget_title: "winget bulunamazsa, 'App Installer'ı yükleyin ve scripti tekrar çalıştırın:",
+        store_link_label: "Mağaza bağlantısı",
+        direct_link_label: "Doğrudan bağlantı"
+      }
     }
   }
 }

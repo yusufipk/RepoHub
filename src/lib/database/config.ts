@@ -35,7 +35,10 @@ export async function query(text: string, params?: any[]) {
   try {
     const res = await pool.query(text, params)
     const duration = Date.now() - start
-    console.log('📊 Query executed', { text, duration, rows: res.rowCount })
+    // Only log slow queries (> 100ms) or errors
+    if (duration > 100) {
+      console.log('⚠️ Slow query', { text: text.substring(0, 50), duration, rows: res.rowCount })
+    }
     return res
   } catch (error) {
     console.error('❌ Query failed', { text, error })
