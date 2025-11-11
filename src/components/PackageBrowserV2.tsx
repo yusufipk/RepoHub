@@ -31,7 +31,10 @@ export function PackageBrowserV2({
   const [totalCount, setTotalCount] = useState(0)
   const [searchQuery, setSearchQuery] = useState('')
   const [typeFilter, setTypeFilter] = useState<string>('')
-  const [repositoryFilter, setRepositoryFilter] = useState<string>('')
+  const isDebianUbuntu = useMemo(() => {
+    const id = selectedPlatform?.id || ''
+    return id === 'debian' || id === 'ubuntu'
+  }, [selectedPlatform])
   const [scrollPosition, setScrollPosition] = useState(0)
   const searchInputRef = useRef<HTMLInputElement>(null)
 
@@ -60,12 +63,8 @@ export function PackageBrowserV2({
           params.search = searchQuery.trim()
         }
         
-        if (typeFilter && typeFilter !== 'all') {
+        if (isDebianUbuntu && typeFilter && typeFilter !== 'all') {
           params.type = typeFilter as 'gui' | 'cli'
-        }
-        
-        if (repositoryFilter && repositoryFilter !== 'all') {
-          params.repository = repositoryFilter as 'official' | 'third-party'
         }
         
         console.log('🔍 Frontend: API params:', params)
@@ -87,7 +86,7 @@ export function PackageBrowserV2({
     }
 
     loadPackages()
-  }, [selectedPlatform, typeFilter, repositoryFilter])
+  }, [selectedPlatform, typeFilter, isDebianUbuntu])
 
   // Debounced search to prevent focus loss
   useEffect(() => {
@@ -109,12 +108,8 @@ export function PackageBrowserV2({
             params.search = searchQuery.trim()
           }
           
-          if (typeFilter && typeFilter !== 'all') {
+          if (isDebianUbuntu && typeFilter && typeFilter !== 'all') {
             params.type = typeFilter as 'gui' | 'cli'
-          }
-          
-          if (repositoryFilter && repositoryFilter !== 'all') {
-            params.repository = repositoryFilter as 'official' | 'third-party'
           }
           
           console.log('🔍 Frontend: Debounced API params:', params)
@@ -135,7 +130,7 @@ export function PackageBrowserV2({
     }, 300) // 300ms debounce
 
     return () => clearTimeout(timeoutId)
-  }, [searchQuery])
+  }, [searchQuery, isDebianUbuntu, typeFilter, selectedPlatform])
 
   // Load more packages
   const loadMore = async () => {
@@ -153,12 +148,8 @@ export function PackageBrowserV2({
         params.search = searchQuery.trim()
       }
       
-      if (typeFilter && typeFilter !== 'all') {
+      if (isDebianUbuntu && typeFilter && typeFilter !== 'all') {
         params.type = typeFilter as 'gui' | 'cli'
-      }
-      
-      if (repositoryFilter && repositoryFilter !== 'all') {
-        params.repository = repositoryFilter as 'official' | 'third-party'
       }
       
       const result = await apiClient.getPackages(params)
@@ -253,7 +244,8 @@ export function PackageBrowserV2({
               />
             </div>
 
-            {/* Type Filter */}
+            {/* Type Filter (Debian/Ubuntu only) */}
+          {isDebianUbuntu && (
             <Select value={typeFilter || "all"} onValueChange={(value) => setTypeFilter(value === "all" ? "" : value)}>
               <SelectTrigger className="w-full sm:w-40">
                 <SelectValue placeholder="Type" />
@@ -264,18 +256,7 @@ export function PackageBrowserV2({
                 <SelectItem value="cli">CLI</SelectItem>
               </SelectContent>
             </Select>
-
-            {/* Repository Filter */}
-            <Select value={repositoryFilter || "all"} onValueChange={(value) => setRepositoryFilter(value === "all" ? "" : value)}>
-              <SelectTrigger className="w-full sm:w-40">
-                <SelectValue placeholder="Repository" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Repositories</SelectItem>
-                <SelectItem value="official">Official</SelectItem>
-                <SelectItem value="third-party">Third Party</SelectItem>
-              </SelectContent>
-            </Select>
+          )}
           </div>
 
           {/* Package List */}
@@ -312,7 +293,7 @@ export function PackageBrowserV2({
                   />
                   <div className="flex items-start space-x-2 flex-1">
                     <div className="mt-0.5">
-                      {getPackageIcon(pkg.type || 'cli')}
+                      {isDebianUbuntu ? getPackageIcon(pkg.type || 'cli') : <PackageIcon className="h-4 w-4" />}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
@@ -325,12 +306,16 @@ export function PackageBrowserV2({
                         {pkg.description || 'No description available'}
                       </p>
                       <div className="flex items-center gap-2 mt-2">
-                        <span className="text-xs text-muted-foreground">
-                          {pkg.type?.toUpperCase() || 'CLI'}
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          {pkg.repository || 'official'}
-                        </span>
+                        {isDebianUbuntu && pkg.type && (
+                          <span className="text-xs text-muted-foreground">
+                            {pkg.type.toUpperCase()}
+                          </span>
+                        )}
+                        {pkg.repository === 'third-party' && (
+                          <span className="text-xs text-muted-foreground">
+                            third-party
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -232,7 +232,7 @@ export class WingetPackageFetcher {
             await query(
               `INSERT INTO packages (id, name, description, version, platform_id, type, repository, popularity_score, is_active)
                VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6, $7, $8)`,
-              [pkg.name, pkg.description, pkg.version, 'windows', 'gui', 'official', 0, true]
+              [pkg.name, pkg.description, pkg.version, 'windows', null, null, 0, true]
             )
             stored++
           } else if (existingResult.rows[0].version !== pkg.version) {

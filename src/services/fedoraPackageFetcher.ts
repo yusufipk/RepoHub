@@ -146,7 +146,7 @@ export class FedoraPackageFetcher {
             await query(
               `INSERT INTO packages (id, name, description, version, platform_id, type, repository, popularity_score, is_active)
                VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6, $7, $8)`,
-              [pkg.name, pkg.description, pkg.version, 'fedora', 'cli', pkg.repository, 0, true]
+              [pkg.name, pkg.description, pkg.version, 'fedora', null, null, 0, true]
             )
             stored++
           } else if (existingResult.rows[0].version !== pkg.version) {
@@ -155,7 +155,7 @@ export class FedoraPackageFetcher {
               `UPDATE packages 
                SET version = $1, description = $2, repository = $3, updated_at = NOW()
                WHERE id = $4`,
-              [pkg.version, pkg.description, pkg.repository, existingResult.rows[0].id]
+              [pkg.version, pkg.description, null, existingResult.rows[0].id]
             )
             updated++
           } else {
