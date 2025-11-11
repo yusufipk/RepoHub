@@ -10,6 +10,7 @@
     "type-check": "tsc --noEmit",
     "test:db": "node scripts/test-db.js",
     "init:backend": "chmod +x scripts/init-backend.sh && ./scripts/init-backend.sh",
+    "init:db": "node scripts/init-db.js",
     "sync:arch": "npx tsx scripts/sync-arch.ts"
   },
   "dependencies": {
