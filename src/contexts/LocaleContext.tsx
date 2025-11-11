@@ -81,6 +81,29 @@ const translations = {
         store_link_label: "Store link",
         direct_link_label: "Direct link"
       }
+    },
+    support: {
+      title: "Support Us",
+      subtitle: "Help keep RepoHub free and open source",
+      description: "Support RepoHub development",
+      amount: "Amount",
+      currency: "Cryptocurrency",
+      email_optional: "Email (optional)",
+      create_payment: "Create Payment",
+      creating: "Creating...",
+      payment_created: "Payment created successfully!",
+      payment_id: "Payment ID",
+      amount_to_pay: "Amount to Pay",
+      pay_now: "Pay Now",
+      payment_note: "You will be redirected to Cryptomus secure payment page",
+      create_another: "Create Another Payment",
+      secure_payment: "All payments are processed securely through Cryptomus",
+      thank_you: "Thank you for your support!",
+      success_title: "Thank You!",
+      success_message: "Your support helps us keep RepoHub free and continue development.",
+      success_note1: "Payment confirmation will be sent to your email if provided.",
+      success_note2: "You can close this page and return to RepoHub.",
+      back_to_site: "Back to RepoHub"
     }
   },
   tr: {
@@ -159,6 +182,29 @@ const translations = {
         store_link_label: "Mağaza bağlantısı",
         direct_link_label: "Doğrudan bağlantı"
       }
+    },
+    support: {
+      title: "Bizi Destekleyin",
+      subtitle: "RepoHub'ı ücretsiz ve açık kaynaklı tutmamıza yardım edin",
+      description: "RepoHub geliştirmesini destekleyin",
+      amount: "Tutar",
+      currency: "Kriptopara",
+      email_optional: "E-posta (isteğe bağlı)",
+      create_payment: "Ödeme Oluştur",
+      creating: "Oluşturuluyor...",
+      payment_created: "Ödeme başarıyla oluşturuldu!",
+      payment_id: "Ödeme ID",
+      amount_to_pay: "Ödenecek Tutar",
+      pay_now: "Şimdi Öde",
+      payment_note: "Cryptomus güvenli ödeme sayfasına yönlendirileceksiniz",
+      create_another: "Başka Ödeme Oluştur",
+      secure_payment: "Tüm ödemeler Cryptomus üzerinden güvenli bir şekilde işlenir",
+      thank_you: "Desteğiniz için teşekkürler!",
+      success_title: "Teşekkürler!",
+      success_message: "Desteğiniz RepoHub'ı ücretsiz tutmamıza ve geliştirmeye devam etmemize yardımcı olur.",
+      success_note1: "Ödeme onayı sağlandıysa e-postanıza gönderilecektir.",
+      success_note2: "Bu sayfayı kapatabilir ve RepoHub'a dönebilirsiniz.",
+      back_to_site: "RepoHub'a Geri Dön"
     }
   }
 }

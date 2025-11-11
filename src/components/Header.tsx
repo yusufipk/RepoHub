@@ -1,13 +1,16 @@
 "use client"
 
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useTheme } from '@/hooks/useTheme'
 import { useLocale } from '@/contexts/LocaleContext'
-import { Sun, Moon, Monitor, Globe } from 'lucide-react'
+import { SupportModal } from '@/components/SupportModal'
+import { Sun, Moon, Monitor, Globe, Heart } from 'lucide-react'
 
 export function Header() {
   const { theme, isDark, toggleTheme } = useTheme()
-  const { locale, toggleLocale } = useLocale()
+  const { locale, toggleLocale, t } = useLocale()
+  const [isSupportModalOpen, setIsSupportModalOpen] = useState(false)
 
   const getThemeIcon = () => {
     switch (theme) {
@@ -32,7 +35,8 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <>
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center justify-between">
         <div className="flex items-center space-x-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
@@ -44,6 +48,19 @@ export function Header() {
         </div>
 
         <div className="flex items-center space-x-2">
+          {/* Support Button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsSupportModalOpen(true)}
+            className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20"
+          >
+            <Heart className="h-4 w-4" />
+            <span className="ml-2 hidden sm:inline">
+              {t('support.title')}
+            </span>
+          </Button>
+
           {/* Theme Toggle */}
           <Button
             variant="ghost"
@@ -72,5 +89,12 @@ export function Header() {
         </div>
       </div>
     </header>
+
+      {/* Support Modal */}
+      <SupportModal
+        isOpen={isSupportModalOpen}
+        onClose={() => setIsSupportModalOpen(false)}
+      />
+    </>
   )
 }
