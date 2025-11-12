@@ -7,7 +7,7 @@ export interface Package {
   category_id?: number
   license_id?: number
   type?: 'gui' | 'cli'
-  repository?: 'official' | 'third-party'
+  repository?: 'official' | 'third-party' | 'aur'
   homepage_url?: string
   download_url?: string
   last_updated?: Date
@@ -53,7 +53,7 @@ export interface CreatePackageInput {
   category_id?: number
   license_id?: number
   type?: 'gui' | 'cli'
-  repository?: 'official' | 'third-party'
+  repository?: 'official' | 'third-party' | 'aur'
   homepage_url?: string
   download_url?: string
   popularity_score?: number
@@ -66,7 +66,7 @@ export interface UpdatePackageInput {
   category_id?: number
   license_id?: number
   type?: 'gui' | 'cli'
-  repository?: 'official' | 'third-party'
+  repository?: 'official' | 'third-party' | 'aur'
   homepage_url?: string
   download_url?: string
   popularity_score?: number
@@ -77,7 +77,7 @@ export interface PackageFilter {
   platform_id?: string
   category_id?: number
   type?: 'gui' | 'cli'
-  repository?: 'official' | 'third-party'
+  repository?: 'official' | 'third-party' | 'aur'
   search?: string
   limit?: number
   offset?: number

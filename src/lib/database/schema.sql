@@ -37,7 +37,7 @@ CREATE TABLE packages (
     category_id INTEGER REFERENCES categories(id),
     license_id INTEGER REFERENCES licenses(id),
     type VARCHAR(10) CHECK (type IN ('gui', 'cli')),
-    repository VARCHAR(20) CHECK (repository IN ('official', 'third-party')),
+    repository VARCHAR(20) CHECK (repository IN ('official', 'third-party', 'aur')),
     homepage_url VARCHAR(255),
     download_url VARCHAR(255),
     last_updated TIMESTAMP WITH TIME ZONE,

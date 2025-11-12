@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
       category_id: searchParams.get('category_id') ? 
         parseInt(searchParams.get('category_id')!) : undefined,
       type: searchParams.get('type') as 'gui' | 'cli' | undefined,
-      repository: searchParams.get('repository') as 'official' | 'third-party' | undefined,
+      repository: searchParams.get('repository') as 'official' | 'third-party' | 'aur' | undefined,
       search: searchParams.get('search') || undefined,
       limit: searchParams.get('limit') ? 
         parseInt(searchParams.get('limit')!) : undefined,

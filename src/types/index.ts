@@ -16,7 +16,7 @@ export interface Package {
   type: 'gui' | 'cli'
   platform?: string | Platform
   platform_id?: string
-  repository: 'official' | 'third-party'
+  repository: 'official' | 'third-party' | 'aur'
   download_url?: string
   lastUpdated?: string
   downloads?: number
@@ -29,7 +29,7 @@ export interface FilterOptions {
   platform_id?: string
   category_id?: number
   type?: 'gui' | 'cli'
-  repository?: 'official' | 'third-party'
+  repository?: 'official' | 'third-party' | 'aur'
   search?: string
   limit?: number
   offset?: number

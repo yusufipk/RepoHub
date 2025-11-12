@@ -177,7 +177,7 @@ export class ArchPackageFetcher {
             await query(
               `INSERT INTO packages (id, name, description, version, platform_id, type, repository, popularity_score, is_active)
                VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6, $7, $8)`,
-              [pkg.name, pkg.description, pkg.version, 'arch', null, null, 0, true]
+              [pkg.name, pkg.description, pkg.version, 'arch', null, 'official', 0, true]
             )
             stored++
           } else if (existingResult.rows[0].version !== pkg.version) {
@@ -186,7 +186,7 @@ export class ArchPackageFetcher {
               `UPDATE packages 
                SET version = $1, description = $2, repository = $3, updated_at = NOW()
                WHERE id = $4`,
-              [pkg.version, pkg.description, null, existingResult.rows[0].id]
+              [pkg.version, pkg.description, 'official', existingResult.rows[0].id]
             )
             updated++
           } else {

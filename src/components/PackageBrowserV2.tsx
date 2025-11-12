@@ -31,10 +31,12 @@ export function PackageBrowserV2({
   const [totalCount, setTotalCount] = useState(0)
   const [searchQuery, setSearchQuery] = useState('')
   const [typeFilter, setTypeFilter] = useState<string>('')
+  const [repositoryFilter, setRepositoryFilter] = useState<string>('')
   const isDebianUbuntu = useMemo(() => {
     const id = selectedPlatform?.id || ''
     return id === 'debian' || id === 'ubuntu'
   }, [selectedPlatform])
+  const isArch = useMemo(() => (selectedPlatform?.id || '') === 'arch', [selectedPlatform])
   const [scrollPosition, setScrollPosition] = useState(0)
   const searchInputRef = useRef<HTMLInputElement>(null)
 
@@ -66,6 +68,9 @@ export function PackageBrowserV2({
         if (isDebianUbuntu && typeFilter && typeFilter !== 'all') {
           params.type = typeFilter as 'gui' | 'cli'
         }
+        if (isArch && repositoryFilter && repositoryFilter !== 'all') {
+          params.repository = repositoryFilter as 'official' | 'aur'
+        }
         
         console.log('🔍 Frontend: API params:', params)
         const result = await apiClient.getPackages(params)
@@ -86,7 +91,7 @@ export function PackageBrowserV2({
     }
 
     loadPackages()
-  }, [selectedPlatform, typeFilter, isDebianUbuntu])
+  }, [selectedPlatform, typeFilter, repositoryFilter, isDebianUbuntu, isArch])
 
   // Debounced search to prevent focus loss
   useEffect(() => {
@@ -111,6 +116,9 @@ export function PackageBrowserV2({
           if (isDebianUbuntu && typeFilter && typeFilter !== 'all') {
             params.type = typeFilter as 'gui' | 'cli'
           }
+          if (isArch && repositoryFilter && repositoryFilter !== 'all') {
+            params.repository = repositoryFilter as 'official' | 'aur'
+          }
           
           console.log('🔍 Frontend: Debounced API params:', params)
           const result = await apiClient.getPackages(params)
@@ -130,7 +138,7 @@ export function PackageBrowserV2({
     }, 300) // 300ms debounce
 
     return () => clearTimeout(timeoutId)
-  }, [searchQuery, isDebianUbuntu, typeFilter, selectedPlatform])
+  }, [searchQuery, isDebianUbuntu, typeFilter, isArch, repositoryFilter, selectedPlatform])
 
   // Load more packages
   const loadMore = async () => {
@@ -150,6 +158,9 @@ export function PackageBrowserV2({
       
       if (isDebianUbuntu && typeFilter && typeFilter !== 'all') {
         params.type = typeFilter as 'gui' | 'cli'
+      }
+      if (isArch && repositoryFilter && repositoryFilter !== 'all') {
+        params.repository = repositoryFilter as 'official' | 'aur'
       }
       
       const result = await apiClient.getPackages(params)
@@ -257,6 +268,18 @@ export function PackageBrowserV2({
               </SelectContent>
             </Select>
           )}
+          {isArch && (
+            <Select value={repositoryFilter || "all"} onValueChange={(value) => setRepositoryFilter(value === "all" ? "" : value)}>
+              <SelectTrigger className="w-full sm:w-40">
+                <SelectValue placeholder="Repository" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All</SelectItem>
+                <SelectItem value="official">Official</SelectItem>
+                <SelectItem value="aur">AUR</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
           </div>
 
           {/* Package List */}
@@ -309,6 +332,11 @@ export function PackageBrowserV2({
                         {isDebianUbuntu && pkg.type && (
                           <span className="text-xs text-muted-foreground">
                             {pkg.type.toUpperCase()}
+                          </span>
+                        )}
+                        {pkg.repository === 'aur' && (
+                          <span className="text-xs text-muted-foreground">
+                            AUR
                           </span>
                         )}
                         {pkg.repository === 'third-party' && (
