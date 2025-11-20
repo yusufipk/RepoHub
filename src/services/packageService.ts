@@ -93,7 +93,8 @@ export class PackageService {
       LIMIT $${paramIndex++} OFFSET $${paramIndex++}
     `
 
-    values.push(limit, offset)
+    const cappedLimit = Math.min(limit, 100)
+    values.push(cappedLimit, offset)
     const packagesResult = await query(packagesQuery, values)
 
     // Transform the results
@@ -146,7 +147,7 @@ export class PackageService {
     `
 
     const result = await query(packageQuery, [id])
-    
+
     if (result.rows.length === 0) {
       return null
     }
@@ -213,9 +214,9 @@ export class PackageService {
         popularity_score, last_seen_at
       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW()) 
       RETURNING *`,
-      [id, name, description, version, platform_id, category_id, 
-       license_id, type, repository, homepage_url, download_url, 
-       popularity_score]
+      [id, name, description, version, platform_id, category_id,
+        license_id, type, repository, homepage_url, download_url,
+        popularity_score]
     )
 
     const createdPackage = await this.getById(result.rows[0].id)
@@ -271,7 +272,7 @@ export class PackageService {
 
     const values = tags.map((tag, index) => `($1, $${index + 2})`).join(', ')
     const params = [packageId, ...tags]
-    
+
     await query(
       `INSERT INTO package_tags (package_id, tag) VALUES ${values} ON CONFLICT DO NOTHING`,
       params
