@@ -6,6 +6,7 @@ import { useTheme } from '@/hooks/useTheme'
 import { useLocale } from '@/contexts/LocaleContext'
 import { SupportModal } from '@/components/SupportModal'
 import { Sun, Moon, Monitor, Globe, Heart } from 'lucide-react'
+import Image from 'next/image'
 
 export function Header() {
   const { theme, isDark, toggleTheme } = useTheme()
@@ -53,60 +54,65 @@ export function Header() {
   return (
     <>
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <span className="text-sm font-bold">RH</span>
+        <div className="container flex h-14 items-center justify-between">
+          <div className="flex items-center space-x-1">
+            <div className="relative h-12 w-12">
+              <Image
+                src="/logo.png"
+                alt="RepoHub Logo"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <span className="hidden font-bold sm:inline-block">
+              RepoHub
+            </span>
           </div>
-          <span className="hidden font-bold sm:inline-block">
-            RepoHub
-          </span>
-        </div>
 
-        <div className="flex items-center space-x-2">
-          {/* Support Button - Only show when Cryptomus is enabled */}
-          {cryptomusEnabled && (
+          <div className="flex items-center space-x-2">
+            {/* Support Button - Only show when Cryptomus is enabled */}
+            {cryptomusEnabled && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsSupportModalOpen(true)}
+                className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20"
+              >
+                <Heart className="h-4 w-4" />
+                <span className="ml-2 hidden sm:inline">
+                  {t('support.title')}
+                </span>
+              </Button>
+            )}
+
+            {/* Theme Toggle */}
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setIsSupportModalOpen(true)}
-              className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20"
+              onClick={toggleTheme}
+              className="w-full justify-start"
             >
-              <Heart className="h-4 w-4" />
+              {getThemeIcon()}
               <span className="ml-2 hidden sm:inline">
-                {t('support.title')}
+                {getThemeLabel()}
               </span>
             </Button>
-          )}
 
-          {/* Theme Toggle */}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={toggleTheme}
-            className="w-full justify-start"
-          >
-            {getThemeIcon()}
-            <span className="ml-2 hidden sm:inline">
-              {getThemeLabel()}
-            </span>
-          </Button>
-
-          {/* Language Toggle */}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={toggleLocale}
-            className="w-full justify-start"
-          >
-            <Globe className="h-4 w-4" />
-            <span className="ml-2 hidden sm:inline">
-              {locale === 'tr' ? 'TR' : 'EN'}
-            </span>
-          </Button>
+            {/* Language Toggle */}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleLocale}
+              className="w-full justify-start"
+            >
+              <Globe className="h-4 w-4" />
+              <span className="ml-2 hidden sm:inline">
+                {locale === 'tr' ? 'TR' : 'EN'}
+              </span>
+            </Button>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
 
       {/* Support Modal */}
       <SupportModal
