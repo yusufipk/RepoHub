@@ -9,9 +9,9 @@ export const metadata: Metadata = {
   title: 'RepoHub - Cross-Platform Package Manager',
   description: 'Simplify software installation across Linux, Windows, and macOS with official repositories',
   icons: {
-    icon: '/logo.png',
-    shortcut: '/logo.png',
-    apple: '/logo.png',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
   },
 }
 
