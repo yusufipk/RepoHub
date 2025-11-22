@@ -13,6 +13,11 @@ const translations = {
       status: "All Systems Operational",
       close: "Close"
     },
+    theme: {
+      light: "Light",
+      dark: "Dark",
+      system: "System"
+    },
     platform: {
       select: "Select Your Platform",
       description: "Choose your operating system and package manager to browse available packages",
@@ -116,6 +121,11 @@ const translations = {
       description: "Linux, Windows ve macOS'te resmi depoları kullanarak yazılım kurulumunu basitleştirin",
       status: "Tüm Sistemler Çalışıyor",
       close: "Kapat"
+    },
+    theme: {
+      light: "Aydınlık",
+      dark: "Karanlık",
+      system: "Sistem"
     },
     platform: {
       select: "Platformunuzu Seçin",

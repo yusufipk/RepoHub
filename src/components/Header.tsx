@@ -1,44 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useTheme } from "@/hooks/useTheme";
 import { useLocale } from "@/contexts/LocaleContext";
 import { SupportModal } from "@/components/SupportModal";
-import { Sun, Moon, Monitor, Globe, Heart, Github } from "lucide-react";
+import { Globe, Heart, Github } from "lucide-react";
 import Image from "next/image";
 import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
+import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
 
 export interface HeaderProps {
   cryptomusEnabled: boolean;
 }
 
 export function Header({ cryptomusEnabled }: HeaderProps) {
-  const { theme, isDark, toggleTheme } = useTheme();
   const { locale, toggleLocale, t } = useLocale();
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
-
-  const getThemeIcon = () => {
-    switch (theme) {
-      case "light":
-        return <Sun className="h-4 w-4" />;
-      case "dark":
-        return <Moon className="h-4 w-4" />;
-      default:
-        return <Monitor className="h-4 w-4" />;
-    }
-  };
-
-  const getThemeLabel = () => {
-    switch (theme) {
-      case "light":
-        return locale === "tr" ? "Aydınlık" : "Light";
-      case "dark":
-        return locale === "tr" ? "Karanlık" : "Dark";
-      default:
-        return locale === "tr" ? "Sistem" : "System";
-    }
-  };
 
   return (
     <>
@@ -92,15 +69,7 @@ export function Header({ cryptomusEnabled }: HeaderProps) {
               </Button>
 
               {/* Theme Toggle */}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={toggleTheme}
-                className="w-full justify-start"
-              >
-                {getThemeIcon()}
-                <span className="ml-2 hidden sm:inline">{getThemeLabel()}</span>
-              </Button>
+              <AnimatedThemeToggler />
 
               {/* Language Toggle */}
               <Button
