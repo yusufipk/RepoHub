@@ -58,7 +58,36 @@ export class PackageService {
     const validSortFields = ['name', 'popularity_score', 'last_updated', 'downloads_count']
     const sortField = validSortFields.includes(sort_by || '') ? sort_by : 'name'
     const sortDirection = sort_order === 'desc' ? 'DESC' : 'ASC'
-    const orderClause = `ORDER BY p.${sortField} ${sortDirection}`
+
+    let orderClause = `ORDER BY p.${sortField} ${sortDirection}`
+
+    // Capture values for count query before adding sort parameters
+    const countValues = [...values]
+
+    // If searching, prioritize name matches
+    if (search) {
+      // 1. Exact name match
+      // 2. Name starts with search term
+      // 3. Name contains search term
+      // 4. Description contains search term
+      // Then sort by popularity/name as tie-breaker
+      orderClause = `
+        ORDER BY 
+          CASE 
+            WHEN p.name ILIKE $${paramIndex} THEN 0        -- Exact match
+            WHEN p.name ILIKE $${paramIndex + 1} THEN 1    -- Starts with
+            WHEN p.name ILIKE $${paramIndex + 2} THEN 2    -- Contains in name
+            ELSE 3                                         -- Contains in description only
+          END ASC,
+          p.popularity_score DESC,
+          p.name ASC
+      `
+      // Add params for the CASE statement
+      values.push(search)           // Exact match
+      values.push(`${search}%`)     // Starts with
+      values.push(`%${search}%`)    // Contains
+      paramIndex += 3
+    }
 
     // Get total count
     const countQuery = `
@@ -66,7 +95,7 @@ export class PackageService {
       FROM packages p
       ${whereClause}
     `
-    const countResult = await query(countQuery, values)
+    const countResult = await query(countQuery, countValues)
     const total = parseInt(countResult.rows[0].total)
 
     // Get packages with joins (simplified)
