@@ -159,3 +159,18 @@ test-results.xml
 
 # Local development
 .local/
+
+# Local helper scripts / logs / state
+.docker_id
+.repohub_docker_id
+setup-init-db.log
+.next-dev.log
+
+# Node / build artifacts
+node_modules
+.next
+dist
+
+# Rust / Tauri build artifacts
+src-tauri/target
+

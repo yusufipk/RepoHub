@@ -6,6 +6,8 @@
     "dev": "next dev -p 3002",
     "build": "next build",
     "start": "next start -p 3002",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "test:db": "node scripts/test-db.js",
@@ -34,6 +36,7 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^2.9.4",
     "@types/node": "^20",
     "@types/pg": "^8.10.9",
     "@types/react": "^18",

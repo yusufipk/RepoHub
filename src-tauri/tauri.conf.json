@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "RepoHub",
+  "version": "0.1.0",
+  "identifier": "dev.lama2923.repohub",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "beforeBuildCommand": "",
+    "devUrl": "http://localhost:3002",
+    "frontendDist": "../public"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "label": "main",
+        "title": "RepoHub",
+        "width": 1280,
+        "height": 800,
+        "center": true,
+        "resizable": true,
+        "fullscreen": false,
+        "decorations": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png"
+    ]
+  },
+  "plugins": {}
+}
