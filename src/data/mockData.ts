@@ -5,33 +5,49 @@ export const platforms: Platform[] = [
     id: 'ubuntu',
     name: 'Ubuntu/Debian',
     packageManager: 'apt',
-    icon: '🐧'
+    icon: 'ubuntu'
+  },
+  {
+    id: 'debian',
+    name: 'Debian',
+    packageManager: 'apt',
+    icon: 'debian'
   },
   {
     id: 'fedora',
     name: 'Fedora',
     packageManager: 'dnf',
-    icon: '🎩'
+    icon: 'fedora'
   },
   {
     id: 'arch',
     name: 'Arch Linux',
     packageManager: 'pacman',
-    icon: '🏛️'
+    icon: 'archlinux'
   },
   {
     id: 'windows',
     name: 'Windows',
     packageManager: 'winget',
-    icon: '🪟'
+    icon: 'windows'
   },
   {
     id: 'macos',
     name: 'macOS',
     packageManager: 'homebrew',
-    icon: '🍎'
+    icon: 'apple'
   }
 ]
+
+// Platform icon slugs for SimpleIcons CDN
+export const platformIconSlugs: Record<string, string> = {
+  debian: 'debian',
+  ubuntu: 'ubuntu',
+  fedora: 'fedora',
+  arch: 'archlinux',
+  windows: 'windows',
+  macos: 'apple',
+}
 
 export const mockPackages: Package[] = [
   // Ubuntu/Debian packages

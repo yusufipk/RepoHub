@@ -10,7 +10,13 @@ const translations = {
       title: "RepoHub - Cross-Platform Package Manager",
       subtitle: "Cross-Platform Package Manager",
       description: "Simplify software installation across Linux, Windows, and macOS with official repositories",
+      status: "All Systems Operational",
       close: "Close"
+    },
+    theme: {
+      light: "Light",
+      dark: "Dark",
+      system: "System"
     },
     platform: {
       select: "Select Your Platform",
@@ -24,14 +30,23 @@ const translations = {
       description: "Select packages to include in your installation script",
       search: "Search packages...",
       no_packages: "No packages found matching your criteria",
+      no_description: "No description available",
       count_label: "({current} of {total} packages for {platform})",
+      loading: "Loading...",
+      load_more: "Load More ({count})",
       filters: {
         category: "Category",
         type: "Type",
         repository: "Repository",
-        gui: "GUI Applications",
-        cli: "CLI Tools",
-        official: "Official Only",
+        all_types: "All Types",
+        all: "All",
+        gui: "GUI",
+        cli: "CLI",
+        official: "Official",
+        aur: "AUR",
+        gui_full: "GUI Applications",
+        cli_full: "CLI Tools",
+        official_only: "Official Only",
         third_party: "Third Party"
       }
     },
@@ -113,7 +128,13 @@ const translations = {
       title: "RepoHub - Çok Platformlu Paket Yöneticisi",
       subtitle: "Çok Platformlu Paket Yöneticisi",
       description: "Linux, Windows ve macOS'te resmi depoları kullanarak yazılım kurulumunu basitleştirin",
+      status: "Tüm Sistemler Çalışıyor",
       close: "Kapat"
+    },
+    theme: {
+      light: "Aydınlık",
+      dark: "Karanlık",
+      system: "Sistem"
     },
     platform: {
       select: "Platformunuzu Seçin",
@@ -127,14 +148,23 @@ const translations = {
       description: "Kurulum scriptinize dahil edilecek paketleri seçin",
       search: "Paket ara...",
       no_packages: "Kriterlerinize uyan paket bulunamadı",
+      no_description: "Açıklama mevcut değil",
       count_label: "({platform} için {current} / {total} paket)",
+      loading: "Yükleniyor...",
+      load_more: "Daha Fazla Yükle ({count})",
       filters: {
         category: "Kategori",
         type: "Tür",
         repository: "Depo",
-        gui: "GUI Uygulamaları",
-        cli: "CLI Araçları",
-        official: "Sadece Resmi",
+        all_types: "Tüm Türler",
+        all: "Tümü",
+        gui: "GUI",
+        cli: "CLI",
+        official: "Resmi",
+        aur: "AUR",
+        gui_full: "GUI Uygulamaları",
+        cli_full: "CLI Araçları",
+        official_only: "Sadece Resmi",
         third_party: "Üçüncü Parti"
       }
     },

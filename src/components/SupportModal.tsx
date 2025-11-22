@@ -102,7 +102,7 @@ export function SupportModal({ isOpen, onClose }: SupportModalProps) {
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="flex items-center space-x-2">
-                <Heart className="h-5 w-5 text-red-500" />
+                <Heart className="h-5 w-5 text-destructive" />
                 <span>{t('support.title')}</span>
               </CardTitle>
               <CardDescription>
@@ -147,7 +147,7 @@ export function SupportModal({ isOpen, onClose }: SupportModalProps) {
             </div>
 
             {error && (
-              <div className="flex items-center space-x-2 text-red-600 bg-red-50 p-3 rounded-lg">
+              <div className="flex items-center space-x-2 text-destructive bg-destructive/10 p-3 rounded-lg">
                 <AlertCircle className="h-4 w-4" />
                 <span className="text-sm">{error}</span>
               </div>

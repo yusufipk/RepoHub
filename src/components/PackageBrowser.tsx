@@ -231,7 +231,7 @@ export function PackageBrowser({
                         <Terminal className="h-4 w-4 text-muted-foreground" />
                       )}
                       {pkg.repository === 'official' && (
-                        <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
+                        <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
                           Official
                         </span>
                       )}

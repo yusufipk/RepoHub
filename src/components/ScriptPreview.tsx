@@ -96,7 +96,7 @@ export function ScriptPreview({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="p-3 bg-secondary rounded-lg">
               <div className="flex items-center space-x-2 mb-1">
-                <Shield className="h-4 w-4 text-green-600" />
+                <Shield className="h-4 w-4 text-primary" />
                 <span className="font-medium text-sm">{t('script.official_repos')}</span>
               </div>
               <p className="text-xs text-muted-foreground">
@@ -105,7 +105,7 @@ export function ScriptPreview({
             </div>
             <div className="p-3 bg-secondary rounded-lg">
               <div className="flex items-center space-x-2 mb-1">
-                <Terminal className="h-4 w-4 text-blue-600" />
+                <Terminal className="h-4 w-4 text-accent-foreground" />
                 <span className="font-medium text-sm">{t('script.idempotent')}</span>
               </div>
               <p className="text-xs text-muted-foreground">
@@ -114,7 +114,7 @@ export function ScriptPreview({
             </div>
             <div className="p-3 bg-secondary rounded-lg">
               <div className="flex items-center space-x-2 mb-1">
-                <Download className="h-4 w-4 text-purple-600" />
+                <Download className="h-4 w-4 text-primary" />
                 <span className="font-medium text-sm">{selectedPackages.length} {t('script.packages_count')}</span>
               </div>
               <p className="text-xs text-muted-foreground">
@@ -165,33 +165,33 @@ export function ScriptPreview({
           </div>
 
           {/* Usage Instructions */}
-          <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <h4 className="font-medium text-blue-900 mb-2">{t('script.usage')}</h4>
+          <div className="p-4 bg-accent/20 border border-accent rounded-lg">
+            <h4 className="font-medium text-accent-foreground mb-2">{t('script.usage')}</h4>
             {selectedPlatform?.id === 'windows' ? (
-              <ol className="text-sm text-blue-800 space-y-2 list-decimal list-inside">
+              <ol className="text-sm text-accent-foreground space-y-2 list-decimal list-inside">
                 <li>
                   {t('script.windows_usage.download_intro')}
-                  <code className="bg-blue-100 px-1 mx-1 rounded">{t('script.windows_usage.file_name')}</code>)
+                  <code className="bg-accent/30 px-1 mx-1 rounded">{t('script.windows_usage.file_name')}</code>)
                 </li>
                 <li>
                   {t('script.windows_usage.open_powershell_intro')}
-                  <code className="bg-blue-100 px-1 mx-1 rounded">{t('script.windows_usage.disabled_error')}</code>,
+                  <code className="bg-accent/30 px-1 mx-1 rounded">{t('script.windows_usage.disabled_error')}</code>,
                   {t('script.windows_usage.run_one')}
                   <div className="mt-1 space-y-1">
                     <div>
                       • {t('script.windows_usage.persistent_title')}
-                      <code className="block bg-blue-100 px-2 py-1 mt-1 rounded">{t('script.windows_usage.persistent_cmd')}</code>
-                      {t('script.windows_usage.then_run')} <code className="bg-blue-100 px-1 rounded">{t('script.windows_usage.then_run_cmd')}</code>
+                      <code className="block bg-accent/30 px-2 py-1 mt-1 rounded">{t('script.windows_usage.persistent_cmd')}</code>
+                      {t('script.windows_usage.then_run')} <code className="bg-accent/30 px-1 rounded">{t('script.windows_usage.then_run_cmd')}</code>
                     </div>
                     <div>
                       • {t('script.windows_usage.onetime_title')}
-                      <code className="block bg-blue-100 px-2 py-1 mt-1 rounded">{t('script.windows_usage.onetime_cmd')}</code>
+                      <code className="block bg-accent/30 px-2 py-1 mt-1 rounded">{t('script.windows_usage.onetime_cmd')}</code>
                     </div>
                   </div>
                 </li>
                 <li>
                   {t('script.windows_usage.unblock_title')}
-                  <code className="block bg-blue-100 px-2 py-1 mt-1 rounded">{t('script.windows_usage.unblock_cmd')}</code>
+                  <code className="block bg-accent/30 px-2 py-1 mt-1 rounded">{t('script.windows_usage.unblock_cmd')}</code>
                 </li>
                 <li>
                   {t('script.windows_usage.winget_title')}
@@ -200,11 +200,11 @@ export function ScriptPreview({
                 </li>
               </ol>
             ) : (
-              <ol className="text-sm text-blue-800 space-y-2 list-decimal list-inside">
+              <ol className="text-sm text-accent-foreground space-y-2 list-decimal list-inside">
                 <li>{t('script.usage_steps.0')}</li>
                 <li>
                   {t('script.usage_steps.1')}
-                  <code className="block bg-blue-100 px-2 py-1 mt-1 rounded">chmod +x install-packages-{selectedPlatform?.id || 'unknown'}{getScriptExtension()}</code>
+                  <code className="block bg-accent/30 px-2 py-1 mt-1 rounded">chmod +x install-packages-{selectedPlatform?.id || 'unknown'}{getScriptExtension()}</code>
                 </li>
                 <li>{t('script.usage_steps.2')}</li>
                 <li>{t('script.usage_steps.3')}</li>
