@@ -44,7 +44,9 @@ export class PackageService {
     if (search) {
       whereConditions.push(`(
         p.name ILIKE $${paramIndex} OR
-        p.description ILIKE $${paramIndex}
+        p.description ILIKE $${paramIndex} OR
+        REPLACE(p.name, '-', ' ') ILIKE $${paramIndex} OR
+        REPLACE(p.name, '-', '') ILIKE $${paramIndex}
       )`)
       values.push(`%${search}%`)
       paramIndex++
@@ -69,7 +71,8 @@ export class PackageService {
       // 1. Exact name match
       // 2. Name starts with search term
       // 3. Name contains search term
-      // 4. Description contains search term
+      // 4. Normalized name matches (hyphens -> spaces, or stripped)
+      // 5. Description contains search term
       // Then sort by popularity/name as tie-breaker
       orderClause = `
         ORDER BY 
@@ -77,6 +80,8 @@ export class PackageService {
             WHEN p.name ILIKE $${paramIndex} THEN 0        -- Exact match
             WHEN p.name ILIKE $${paramIndex + 1} THEN 1    -- Starts with
             WHEN p.name ILIKE $${paramIndex + 2} THEN 2    -- Contains in name
+            WHEN REPLACE(p.name, '-', ' ') ILIKE $${paramIndex + 2} THEN 2 -- Normalized (space)
+            WHEN REPLACE(p.name, '-', '') ILIKE $${paramIndex + 2} THEN 2  -- Normalized (strip)
             ELSE 3                                         -- Contains in description only
           END ASC,
           p.popularity_score DESC,
