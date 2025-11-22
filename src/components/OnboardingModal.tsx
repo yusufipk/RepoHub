@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -44,6 +44,15 @@ export function OnboardingModal({
     )
     const [experienceLevel, setExperienceLevel] = useState<ExperienceLevel>('beginner')
 
+    // Reset state when modal opens
+    useEffect(() => {
+        if (isOpen) {
+            setStep(1)
+            // Keep current OS selection or use detected
+            setSelectedOS(detectedOS !== 'unknown' ? detectedOS : 'ubuntu')
+        }
+    }, [isOpen, detectedOS])
+
     if (!isOpen) return null
 
     const handleCategoryToggle = (category: UserCategory) => {
@@ -78,9 +87,11 @@ export function OnboardingModal({
 
         onComplete({
             categories: selectedCategories,
-            selectedOS: selectedOS !== detectedOS ? selectedOS : undefined,
+            selectedOS: selectedOS,
             experienceLevel
         })
+
+        // Close modal
         onClose()
     }
 
@@ -142,8 +153,8 @@ export function OnboardingModal({
                                         key={preset.category}
                                         onClick={() => handleCategoryToggle(preset.category)}
                                         className={`p-4 rounded-lg border-2 text-left transition-all hover:scale-105 ${selectedCategories.includes(preset.category)
-                                                ? 'border-primary bg-primary/10'
-                                                : 'border-border hover:border-primary/50'
+                                            ? 'border-primary bg-primary/10'
+                                            : 'border-border hover:border-primary/50'
                                             }`}
                                     >
                                         <div className="flex items-start gap-3">
@@ -192,8 +203,8 @@ export function OnboardingModal({
                                         key={platform.id}
                                         onClick={() => setSelectedOS(platform.id)}
                                         className={`p-4 rounded-lg border-2 text-center transition-all hover:scale-105 ${selectedOS === platform.id
-                                                ? 'border-primary bg-primary/10'
-                                                : 'border-border hover:border-primary/50'
+                                            ? 'border-primary bg-primary/10'
+                                            : 'border-border hover:border-primary/50'
                                             }`}
                                     >
                                         <div className="text-4xl mb-2">{platform.icon}</div>
@@ -222,8 +233,8 @@ export function OnboardingModal({
                                         key={level}
                                         onClick={() => setExperienceLevel(level)}
                                         className={`w-full p-4 rounded-lg border-2 text-left transition-all hover:scale-[1.02] ${experienceLevel === level
-                                                ? 'border-primary bg-primary/10'
-                                                : 'border-border hover:border-primary/50'
+                                            ? 'border-primary bg-primary/10'
+                                            : 'border-border hover:border-primary/50'
                                             }`}
                                     >
                                         <h4 className="font-semibold capitalize mb-1">

@@ -91,7 +91,12 @@ export function useRecommendationProfile() {
 
         // Handle version migration
         if (!parsed.version || parsed.version < CURRENT_PROFILE_VERSION) {
-          console.log("Migrating profile from version", parsed.version || 0, "to", CURRENT_PROFILE_VERSION);
+          console.log(
+            "Migrating profile from version",
+            parsed.version || 0,
+            "to",
+            CURRENT_PROFILE_VERSION
+          );
           // Add migration logic here when schema changes in the future
           parsed.version = CURRENT_PROFILE_VERSION;
         }
@@ -125,13 +130,20 @@ export function useRecommendationProfile() {
         const updated: UserProfile = {
           ...profile,
           ...newProfile,
+          version: CURRENT_PROFILE_VERSION,
           lastUpdated: new Date().toISOString(),
         };
+
+        console.log("💾 Saving profile:", updated);
+
         setProfile(updated);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+
+        console.log("✅ Profile saved successfully to localStorage");
+
         return true;
       } catch (error) {
-        console.error("Error saving user profile:", error);
+        console.error("❌ Error saving user profile:", error);
         return false;
       }
     },

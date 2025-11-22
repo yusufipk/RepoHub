@@ -88,7 +88,7 @@ export class RecommendationService {
     try {
       // Fetch all preset packages in one query
       const packages: Package[] = [];
-      
+
       // Search for each package name (case-insensitive)
       // Note: Current API doesn't support bulk name filtering,
       // so we optimize by fetching larger batches and filtering
@@ -105,7 +105,7 @@ export class RecommendationService {
         const exactMatch = result.packages.find(
           (pkg) => pkg.name.toLowerCase() === name.toLowerCase()
         );
-        
+
         if (exactMatch) {
           packages.push(exactMatch);
         } else if (result.packages.length > 0) {
@@ -155,7 +155,9 @@ export class RecommendationService {
           // This is a workaround until we add category name filtering to API
           const result = await PackageService.getMany({
             platform_id: platformId,
-            limit: Math.ceil(limit / (categories.length * dbCategoryNames.length)),
+            limit: Math.ceil(
+              limit / (categories.length * dbCategoryNames.length)
+            ),
             sort_by: "popularity_score",
             sort_order: "desc",
           });

@@ -5,14 +5,16 @@ import { Button } from '@/components/ui/button'
 import { useTheme } from '@/hooks/useTheme'
 import { useLocale } from '@/contexts/LocaleContext'
 import { SupportModal } from '@/components/SupportModal'
-import { Sun, Moon, Monitor, Globe, Heart, Github } from 'lucide-react'
+import { Sun, Moon, Monitor, Globe, Heart, Github, Settings } from 'lucide-react'
 import Image from 'next/image'
 
 export interface HeaderProps {
   cryptomusEnabled: boolean
+  onResetPreferences?: () => void
+  hasProfile?: boolean
 }
 
-export function Header({ cryptomusEnabled }: HeaderProps) {
+export function Header({ cryptomusEnabled, onResetPreferences, hasProfile }: HeaderProps) {
   const { theme, isDark, toggleTheme } = useTheme()
   const { locale, toggleLocale, t } = useLocale()
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false)
@@ -58,6 +60,21 @@ export function Header({ cryptomusEnabled }: HeaderProps) {
           </div>
 
           <div className="flex items-center space-x-2">
+            {/* Preferences Button - Show when profile exists */}
+            {hasProfile && onResetPreferences && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onResetPreferences}
+                className="w-full justify-start"
+              >
+                <Settings className="h-4 w-4" />
+                <span className="ml-2 hidden sm:inline">
+                  {locale === 'tr' ? 'Tercihler' : 'Preferences'}
+                </span>
+              </Button>
+            )}
+
             {/* Support Button - Only show when Cryptomus is enabled */}
             {cryptomusEnabled && (
               <Button

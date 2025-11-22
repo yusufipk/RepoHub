@@ -71,7 +71,8 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    const limit = body.limit && body.limit > 0 && body.limit <= 50 ? body.limit : 20;
+    const limit =
+      body.limit && body.limit > 0 && body.limit <= 50 ? body.limit : 20;
 
     // Generate recommendations
     const recommendations = await RecommendationService.generateRecommendations(

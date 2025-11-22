@@ -50,7 +50,7 @@ export function RecommendationsSection({
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}))
-                
+
                 if (response.status === 400) {
                     throw new Error(errorData.error || 'Invalid request parameters')
                 } else if (response.status === 500) {
@@ -66,7 +66,7 @@ export function RecommendationsSection({
             setRecommendations(data.recommendations || [])
         } catch (err) {
             console.error('Error fetching recommendations:', err)
-            
+
             // User-friendly error messages
             if (err instanceof TypeError && err.message.includes('fetch')) {
                 setError('Network error. Please check your internet connection.')
@@ -109,6 +109,37 @@ export function RecommendationsSection({
                         </div>
                     </div>
                     <div className="flex gap-2">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                                // Toggle: if all recommendations are selected, deselect them, otherwise select all
+                                const allSelected = recommendations.every(rec =>
+                                    selectedPackages.some(sel => sel.id === rec.id)
+                                )
+
+                                if (allSelected) {
+                                    // Deselect all recommendations
+                                    recommendations.forEach(rec => {
+                                        if (isPackageSelected(rec)) {
+                                            onPackageToggle(rec)
+                                        }
+                                    })
+                                } else {
+                                    // Select all recommendations
+                                    recommendations.forEach(rec => {
+                                        if (!isPackageSelected(rec)) {
+                                            onPackageToggle(rec)
+                                        }
+                                    })
+                                }
+                            }}
+                            disabled={loading || recommendations.length === 0}
+                        >
+                            {recommendations.every(rec => selectedPackages.some(sel => sel.id === rec.id))
+                                ? (t('common.deselect_all') || 'Deselect All')
+                                : (t('common.select_all') || 'Select All')}
+                        </Button>
                         <Button
                             variant="outline"
                             size="sm"

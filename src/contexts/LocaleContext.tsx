@@ -12,7 +12,9 @@ const translations = {
       description: "Simplify software installation across Linux, Windows, and macOS with official repositories",
       close: "Close",
       next: "Next",
-      back: "Back"
+      back: "Back",
+      select_all: "Select All",
+      deselect_all: "Deselect All"
     },
     platform: {
       select: "Select Your Platform",
@@ -116,7 +118,8 @@ const translations = {
       step1: {
         title: "What do you want to use your computer for?",
         description: "Select up to 3 categories that match your needs",
-        selected: "{count} selected (max 3)"
+        selected: "{count} selected (max 3)",
+        all_selected: "All {count} categories selected"
       },
       step2: {
         title: "Select your operating system",
@@ -194,7 +197,9 @@ const translations = {
       description: "Linux, Windows ve macOS'te resmi depoları kullanarak yazılım kurulumunu basitleştirin",
       close: "Kapat",
       next: "İleri",
-      back: "Geri"
+      back: "Geri",
+      select_all: "Tümünü Seç",
+      deselect_all: "Seçimi Kaldır"
     },
     platform: {
       select: "Platformunuzu Seçin",
@@ -298,7 +303,8 @@ const translations = {
       step1: {
         title: "Bilgisayarınızı ne için kullanmak istiyorsunuz?",
         description: "İhtiyaçlarınıza uygun en fazla 3 kategori seçin",
-        selected: "{count} seçildi (max 3)"
+        selected: "{count} seçildi (max 3)",
+        all_selected: "Tüm {count} kategori seçildi"
       },
       step2: {
         title: "İşletim sisteminizi seçin",
