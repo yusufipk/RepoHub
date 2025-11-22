@@ -10,7 +10,11 @@ const translations = {
       title: "RepoHub - Cross-Platform Package Manager",
       subtitle: "Cross-Platform Package Manager",
       description: "Simplify software installation across Linux, Windows, and macOS with official repositories",
-      close: "Close"
+      close: "Close",
+      next: "Next",
+      back: "Back",
+      select_all: "Select All",
+      deselect_all: "Deselect All"
     },
     platform: {
       select: "Select Your Platform",
@@ -106,6 +110,90 @@ const translations = {
       success_note1: "Payment confirmation will be sent to your email if provided.",
       success_note2: "You can close this page and return to RepoHub.",
       back_to_site: "Back to RepoHub"
+    },
+    onboarding: {
+      title: "Welcome to RepoHub!",
+      subtitle: "Let's personalize your package recommendations",
+      complete: "Get My Recommendations",
+      step1: {
+        title: "What do you want to use your computer for?",
+        description: "Select up to 3 categories that match your needs",
+        selected: "{count} selected (max 3)",
+        all_selected: "All {count} categories selected"
+      },
+      step2: {
+        title: "Select your operating system",
+        description: "We'll recommend compatible packages for your platform",
+        detected: "✓ Detected: {os}"
+      },
+      step3: {
+        title: "What's your experience level?",
+        description: "This helps us recommend appropriate tools",
+        levels: {
+          beginner: {
+            name: "Beginner",
+            description: "New to software installation and package management"
+          },
+          intermediate: {
+            name: "Intermediate",
+            description: "Comfortable with basic command-line operations"
+          },
+          advanced: {
+            name: "Advanced",
+            description: "Experienced with system administration and package management"
+          }
+        }
+      }
+    },
+    categories: {
+      development: {
+        name: "Development",
+        description: "Code editors, compilers, and development tools"
+      },
+      design: {
+        name: "Design",
+        description: "Graphics, UI/UX, and creative software"
+      },
+      multimedia: {
+        name: "Multimedia",
+        description: "Audio, video editing, and media tools"
+      },
+      "system-tools": {
+        name: "System Tools",
+        description: "System administration and utilities"
+      },
+      gaming: {
+        name: "Gaming",
+        description: "Gaming platforms and related tools"
+      },
+      productivity: {
+        name: "Productivity",
+        description: "Office, note-taking, and productivity apps"
+      },
+      education: {
+        name: "Education",
+        description: "Educational and scientific software"
+      }
+    },
+    recommendations: {
+      title: "Recommended for You",
+      subtitle: "Personalized package recommendations based on your profile",
+      refresh: "Refresh Recommendations",
+      customize: "Customize Preferences",
+      no_recommendations: "No recommendations available. Please update your preferences.",
+      loading: "Finding the best packages for you...",
+      score: "Match Score",
+      preset_badge: "Essential",
+      view_details: "View Details",
+      add_to_selection: "Add to Selection",
+      reason: "Why recommended:",
+      based_on: "Based on your interests in:",
+      packages: "packages",
+      sort: {
+        recommended: "Best Match",
+        popular: "Popular",
+        preset: "Essential"
+      }
     }
   },
   tr: {
@@ -113,7 +201,11 @@ const translations = {
       title: "RepoHub - Çok Platformlu Paket Yöneticisi",
       subtitle: "Çok Platformlu Paket Yöneticisi",
       description: "Linux, Windows ve macOS'te resmi depoları kullanarak yazılım kurulumunu basitleştirin",
-      close: "Kapat"
+      close: "Kapat",
+      next: "İleri",
+      back: "Geri",
+      select_all: "Tümünü Seç",
+      deselect_all: "Seçimi Kaldır"
     },
     platform: {
       select: "Platformunuzu Seçin",
@@ -209,6 +301,90 @@ const translations = {
       success_note1: "Ödeme onayı sağlandıysa e-postanıza gönderilecektir.",
       success_note2: "Bu sayfayı kapatabilir ve RepoHub'a dönebilirsiniz.",
       back_to_site: "RepoHub'a Geri Dön"
+    },
+    onboarding: {
+      title: "RepoHub'a Hoş Geldiniz!",
+      subtitle: "Paket önerilerinizi kişiselleştirelim",
+      complete: "Önerilerimi Getir",
+      step1: {
+        title: "Bilgisayarınızı ne için kullanmak istiyorsunuz?",
+        description: "İhtiyaçlarınıza uygun en fazla 3 kategori seçin",
+        selected: "{count} seçildi (max 3)",
+        all_selected: "Tüm {count} kategori seçildi"
+      },
+      step2: {
+        title: "İşletim sisteminizi seçin",
+        description: "Platformunuzla uyumlu paketler önereceğiz",
+        detected: "✓ Tespit edildi: {os}"
+      },
+      step3: {
+        title: "Deneyim seviyeniz nedir?",
+        description: "Bu, size uygun araçları önermemize yardımcı olur",
+        levels: {
+          beginner: {
+            name: "Başlangıç",
+            description: "Yazılım kurulumu ve paket yönetimine yeni"
+          },
+          intermediate: {
+            name: "Orta",
+            description: "Temel komut satırı işlemlerinde rahat"
+          },
+          advanced: {
+            name: "İleri",
+            description: "Sistem yönetimi ve paket yönetiminde deneyimli"
+          }
+        }
+      }
+    },
+    categories: {
+      development: {
+        name: "Geliştirme",
+        description: "Kod editörleri, derleyiciler ve geliştirme araçları"
+      },
+      design: {
+        name: "Tasarım",
+        description: "Grafik, UI/UX ve yaratıcı yazılımlar"
+      },
+      multimedia: {
+        name: "Multimedya",
+        description: "Ses, video düzenleme ve medya araçları"
+      },
+      "system-tools": {
+        name: "Sistem Araçları",
+        description: "Sistem yönetimi ve yardımcı programlar"
+      },
+      gaming: {
+        name: "Oyun",
+        description: "Oyun platformları ve ilgili araçlar"
+      },
+      productivity: {
+        name: "Üretkenlik",
+        description: "Ofis, not alma ve üretkenlik uygulamaları"
+      },
+      education: {
+        name: "Eğitim",
+        description: "Eğitim ve bilimsel yazılımlar"
+      }
+    },
+    recommendations: {
+      title: "Size Özel Öneriler",
+      subtitle: "Profilinize göre kişiselleştirilmiş paket önerileri",
+      refresh: "Önerileri Yenile",
+      customize: "Tercihleri Özelleştir",
+      no_recommendations: "Öneri mevcut değil. Lütfen tercihlerinizi güncelleyin.",
+      loading: "Sizin için en iyi paketleri buluyoruz...",
+      score: "Eşleşme Skoru",
+      preset_badge: "Temel",
+      view_details: "Detayları Gör",
+      add_to_selection: "Seçime Ekle",
+      reason: "Neden önerildi:",
+      based_on: "İlgi alanlarınıza göre:",
+      packages: "paket",
+      sort: {
+        recommended: "En Uygun",
+        popular: "Popüler",
+        preset: "Temel"
+      }
     }
   }
 }
@@ -238,7 +414,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
       if (browserLang.startsWith('tr')) {
         return 'tr'
       }
-      
+
       return 'en'
     }
 
@@ -257,7 +433,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   const t = (key: string, params?: Record<string, string | number>) => {
     const keys = key.split('.')
     let value: any = translations[locale]
-    
+
     for (const k of keys) {
       value = value?.[k]
     }
