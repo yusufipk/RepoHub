@@ -62,6 +62,37 @@ RepoHub provides a unified interface for package discovery and installation acro
 
     Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## 🔄 API Usage
+
+### Syncing Repositories
+
+You can trigger a repository sync using the API. This is useful for updating the package database.
+
+**Endpoint:** `POST /api/sync`
+
+**Headers:**
+- `Content-Type`: `application/json`
+- `x-sync-secret`: Your sync secret key (required if `SYNC_SERVER_ONLY=true`)
+
+**Body Parameters:**
+- `platform`: The platform to sync. Options:
+    - `debian`: Sync Debian packages (Official Repo)
+    - `ubuntu`: Sync Ubuntu packages (Official Repo)
+    - `arch`: Sync Arch Linux packages (Official Repo)
+    - `fedora`: Sync Fedora packages (Official Repo)
+    - `windows`: Sync Windows packages (Winget)
+    - `macos`: Sync macOS packages (Homebrew)
+    - `all`: Sync all platforms
+
+**Example Request:**
+
+```bash
+curl -X POST http://localhost:3000/api/sync \
+  -H "Content-Type: application/json" \
+  -H "x-sync-secret: your_secret_key" \
+  -d '{"platform": "all"}'
+```
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
