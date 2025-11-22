@@ -21,13 +21,24 @@ interface OnboardingModalProps {
 }
 
 const PLATFORMS = [
-    { id: 'windows', name: 'Windows', icon: '🪟' },
-    { id: 'macos', name: 'macOS', icon: '🍎' },
-    { id: 'ubuntu', name: 'Ubuntu', icon: '🐧' },
-    { id: 'debian', name: 'Debian', icon: '🐧' },
-    { id: 'arch', name: 'Arch Linux', icon: '🏛️' },
-    { id: 'fedora', name: 'Fedora', icon: '🎩' }
+    { id: 'windows', name: 'Windows' },
+    { id: 'macos', name: 'macOS' },
+    { id: 'ubuntu', name: 'Ubuntu' },
+    { id: 'debian', name: 'Debian' },
+    { id: 'arch', name: 'Arch Linux' },
+    { id: 'fedora', name: 'Fedora' }
 ]
+
+const iconSlug: Record<string, string> = {
+    debian: 'debian',
+    ubuntu: 'ubuntu',
+    fedora: 'fedora',
+    arch: 'archlinux',
+    windows: 'windows',
+    macos: 'apple'
+}
+
+const iconBase = (slug: string) => `https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/${slug}.svg`
 
 export function OnboardingModal({
     isOpen,
@@ -207,7 +218,20 @@ export function OnboardingModal({
                                             : 'border-border hover:border-primary/50'
                                             }`}
                                     >
-                                        <div className="text-4xl mb-2">{platform.icon}</div>
+                                        <div
+                                            className={`h-12 w-12 mx-auto mb-3 ${selectedOS === platform.id ? 'text-foreground' : 'text-muted-foreground'}`}
+                                            style={{
+                                                WebkitMaskImage: `url(${iconBase(iconSlug[platform.id] || 'linux')})`,
+                                                maskImage: `url(${iconBase(iconSlug[platform.id] || 'linux')})`,
+                                                WebkitMaskRepeat: 'no-repeat',
+                                                maskRepeat: 'no-repeat',
+                                                WebkitMaskSize: 'contain',
+                                                maskSize: 'contain',
+                                                WebkitMaskPosition: 'center',
+                                                maskPosition: 'center',
+                                                backgroundColor: 'currentColor'
+                                            } as React.CSSProperties}
+                                        />
                                         <div className="font-semibold text-sm">{platform.name}</div>
                                     </button>
                                 ))}

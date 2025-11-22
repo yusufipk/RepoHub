@@ -10,6 +10,7 @@ import {
   getPresetPackageNames,
   getPresetPriority,
   getRecommendationReason,
+  RECOMMENDATION_PRESETS,
 } from "@/data/recommendationPresets";
 
 /**
@@ -34,36 +35,46 @@ export class RecommendationService {
     // Step 1: Get preset package names for the user's categories and platform
     const presetPackageNames = getPresetPackageNames(categories, platform_id);
 
-    // Step 2: Fetch packages from database
-    // First, get preset packages
-    const presetPackages = await this.fetchPresetPackages(
-      presetPackageNames,
-      platform_id
-    );
+    // Step 2: Fetch packages from database with category tracking
+    // Map to track which category each package came from
+    const packageCategoryMap = new Map<string, UserCategory>();
+
+    // First, get preset packages (tagged with their categories)
+    const presetPackagesWithCategories =
+      await this.fetchPresetPackagesWithCategories(
+        categories,
+        platform_id,
+        packageCategoryMap
+      );
 
     // Then, get additional packages from categories
-    const categoryPackages = await this.fetchCategoryPackages(
+    const categoryPackagesMap = await this.fetchCategoryPackagesWithTracking(
       categories,
       platform_id,
-      limit * 2 // Fetch more to ensure we have enough after filtering
+      limit * 2, // Fetch more to ensure we have enough after filtering
+      packageCategoryMap
     );
 
     // Step 3: Combine and deduplicate
     const allPackages = this.deduplicatePackages([
-      ...presetPackages,
-      ...categoryPackages,
+      ...presetPackagesWithCategories,
+      ...categoryPackagesMap,
     ]);
 
-    // Step 4: Score and rank packages
-    const scoredPackages = allPackages.map((pkg) =>
-      this.scorePackage(
+    // Step 4: Score and rank packages - distribute categories evenly for untracked packages
+    const scoredPackages = allPackages.map((pkg, index) => {
+      // If not in map, distribute evenly across categories
+      const matchedCategory =
+        packageCategoryMap.get(pkg.id) || categories[index % categories.length];
+      return this.scorePackage(
         pkg,
         categories,
         platform_id,
         presetPackageNames,
-        experienceLevel
-      )
-    );
+        experienceLevel,
+        matchedCategory
+      );
+    });
 
     // Step 5: Sort by score and limit results
     scoredPackages.sort(
@@ -71,6 +82,52 @@ export class RecommendationService {
     );
 
     return scoredPackages.slice(0, limit);
+  }
+
+  /**
+   * Fetch packages that match preset names with category tracking
+   */
+  private static async fetchPresetPackagesWithCategories(
+    categories: UserCategory[],
+    platformId: string,
+    categoryMap: Map<string, UserCategory>
+  ): Promise<Package[]> {
+    const packages: Package[] = [];
+
+    for (const category of categories) {
+      const preset = RECOMMENDATION_PRESETS.find(
+        (p) => p.category === category
+      );
+      if (!preset) continue;
+
+      const categoryPackageNames = preset.packages
+        .filter((p) => p.platforms.includes(platformId))
+        .map((p) => p.packageName);
+
+      for (const name of categoryPackageNames) {
+        const result = await PackageService.getMany({
+          platform_id: platformId,
+          search: name,
+          limit: 5,
+          sort_by: "popularity_score",
+          sort_order: "desc",
+        });
+
+        const exactMatch = result.packages.find(
+          (pkg) => pkg.name.toLowerCase() === name.toLowerCase()
+        );
+
+        if (exactMatch) {
+          packages.push(exactMatch);
+          categoryMap.set(exactMatch.id, category);
+        } else if (result.packages.length > 0) {
+          packages.push(result.packages[0]);
+          categoryMap.set(result.packages[0].id, category);
+        }
+      }
+    }
+
+    return packages;
   }
 
   /**
@@ -117,6 +174,48 @@ export class RecommendationService {
       return packages;
     } catch (error) {
       console.error("Error fetching preset packages:", error);
+      return [];
+    }
+  }
+
+  /**
+   * Fetch packages based on categories with tracking
+   */
+  private static async fetchCategoryPackagesWithTracking(
+    categories: UserCategory[],
+    platformId: string,
+    limit: number,
+    categoryMap: Map<string, UserCategory>
+  ): Promise<Package[]> {
+    try {
+      const allPackages: Package[] = [];
+      const seenIds = new Set<string>();
+      const perCategory = Math.ceil(limit / categories.length);
+
+      for (const category of categories) {
+        const result = await PackageService.getMany({
+          platform_id: platformId,
+          limit: perCategory,
+          sort_by: "popularity_score",
+          sort_order: "desc",
+        });
+
+        // Add packages without duplicates and tag with category
+        for (const pkg of result.packages) {
+          if (!seenIds.has(pkg.id)) {
+            seenIds.add(pkg.id);
+            allPackages.push(pkg);
+            // Tag this package with the category
+            if (!categoryMap.has(pkg.id)) {
+              categoryMap.set(pkg.id, category);
+            }
+          }
+        }
+      }
+
+      return allPackages;
+    } catch (error) {
+      console.error("Error fetching category packages:", error);
       return [];
     }
   }
@@ -201,7 +300,8 @@ export class RecommendationService {
     categories: UserCategory[],
     platformId: string,
     presetPackageNames: string[],
-    experienceLevel?: ExperienceLevel
+    experienceLevel?: ExperienceLevel,
+    matchedCategory?: UserCategory
   ): RecommendedPackage {
     let score = 0;
     let reason = "";
@@ -273,6 +373,7 @@ export class RecommendationService {
       recommendationScore: finalScore,
       recommendationReason: reason,
       presetMatch: isPresetMatch,
+      matchedCategory: matchedCategory,
     };
   }
 

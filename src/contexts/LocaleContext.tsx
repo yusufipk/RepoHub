@@ -187,7 +187,13 @@ const translations = {
       view_details: "View Details",
       add_to_selection: "Add to Selection",
       reason: "Why recommended:",
-      based_on: "Based on your interests in:"
+      based_on: "Based on your interests in:",
+      packages: "packages",
+      sort: {
+        recommended: "Best Match",
+        popular: "Popular",
+        preset: "Essential"
+      }
     }
   },
   tr: {
@@ -372,7 +378,13 @@ const translations = {
       view_details: "Detayları Gör",
       add_to_selection: "Seçime Ekle",
       reason: "Neden önerildi:",
-      based_on: "İlgi alanlarınıza göre:"
+      based_on: "İlgi alanlarınıza göre:",
+      packages: "paket",
+      sort: {
+        recommended: "En Uygun",
+        popular: "Popüler",
+        preset: "Temel"
+      }
     }
   }
 }
