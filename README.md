@@ -29,7 +29,7 @@ RepoHub provides a unified interface for package discovery and installation acro
 ### Prerequisites
 
 -   Node.js 18+
--   npm / pnpm / yarn
+-   pnpm
 -   Docker (optional, for database)
 
 ### Installation
@@ -42,8 +42,6 @@ RepoHub provides a unified interface for package discovery and installation acro
 
 2.  **Install dependencies:**
     ```bash
-    npm install
-    # or
     pnpm install
     ```
 
@@ -53,10 +51,14 @@ RepoHub provides a unified interface for package discovery and installation acro
     cp .env.example .env
     ```
 
-4.  **Run the development server:**
+4.  **Initialize the Database:**
+    Run the initialization script to set up the database schema and apply migrations.
     ```bash
-    npm run dev
-    # or
+    pnpm init:db
+    ```
+
+5.  **Run the development server:**
+    ```bash
     pnpm dev
     ```
 

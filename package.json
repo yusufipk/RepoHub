@@ -9,7 +9,6 @@
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "test:db": "node scripts/test-db.js",
-    "init:backend": "chmod +x scripts/init-backend.sh && ./scripts/init-backend.sh",
     "init:db": "node scripts/init-db.js"
   },
   "dependencies": {
