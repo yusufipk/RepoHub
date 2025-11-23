@@ -107,7 +107,7 @@ RepoHub, kullanıcılara kişiselleştirilmiş öneriler sunmak için düzenlenm
 
 ### Paket Nasıl Eklenir
 
-Paket önerileri `[/src/data/recommendationPresets.ts](./src/data/recommendationPresets.ts)` dosyasında saklanır.
+Paket önerileri [/src/data/recommendationPresets.ts](./src/data/recommendationPresets.ts) dosyasında saklanır.
 
 #### 1. Doğru Konumu Bulun
 
