@@ -8,6 +8,7 @@ import { X, ChevronRight, ChevronLeft, Sparkles } from 'lucide-react'
 import { UserCategory, ExperienceLevel } from '@/types/recommendations'
 import { useLocale } from '@/contexts/LocaleContext'
 import { RECOMMENDATION_PRESETS } from '@/data/recommendationPresets'
+import { CATEGORY_ICONS } from '@/constants/categoryIcons'
 
 interface OnboardingModalProps {
     isOpen: boolean
@@ -159,28 +160,33 @@ export function OnboardingModal({
                             </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                {RECOMMENDATION_PRESETS.map(preset => (
-                                    <button
-                                        key={preset.category}
-                                        onClick={() => handleCategoryToggle(preset.category)}
-                                        className={`p-4 rounded-lg border-2 text-left transition-all hover:scale-105 ${selectedCategories.includes(preset.category)
-                                            ? 'border-primary bg-primary/10'
-                                            : 'border-border hover:border-primary/50'
-                                            }`}
-                                    >
-                                        <div className="flex items-start gap-3">
-                                            <span className="text-3xl">{preset.icon}</span>
-                                            <div className="flex-1 min-w-0">
-                                                <h4 className="font-semibold capitalize">
-                                                    {t(`categories.${preset.category}.name`)}
-                                                </h4>
-                                                <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-                                                    {t(`categories.${preset.category}.description`)}
-                                                </p>
+                                {RECOMMENDATION_PRESETS.map(preset => {
+                                    const Icon = CATEGORY_ICONS[preset.category]
+                                    return (
+                                        <button
+                                            key={preset.category}
+                                            onClick={() => handleCategoryToggle(preset.category)}
+                                            className={`p-4 rounded-lg border-2 text-left transition-all hover:scale-105 ${selectedCategories.includes(preset.category)
+                                                ? 'border-primary bg-primary/10'
+                                                : 'border-border hover:border-primary/50'
+                                                }`}
+                                        >
+                                            <div className="flex items-start gap-3">
+                                                <div className="p-2 rounded-md bg-background border">
+                                                    {Icon && <Icon className="h-6 w-6 text-primary" />}
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <h4 className="font-semibold capitalize">
+                                                        {t(`categories.${preset.category}.name`)}
+                                                    </h4>
+                                                    <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                                                        {t(`categories.${preset.category}.description`)}
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </button>
-                                ))}
+                                        </button>
+                                    )
+                                })}
                             </div>
 
                             {selectedCategories.length > 0 && (

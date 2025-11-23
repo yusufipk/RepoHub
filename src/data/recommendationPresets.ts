@@ -8,7 +8,6 @@ export const RECOMMENDATION_PRESETS: CategoryPreset[] = [
   {
     category: "development",
     description: "Essential tools for software development",
-    icon: "💻",
     packages: [
       {
         packageName: "git",
@@ -85,7 +84,6 @@ export const RECOMMENDATION_PRESETS: CategoryPreset[] = [
   {
     category: "design",
     description: "Tools for graphic design, UI/UX, and creative work",
-    icon: "🎨",
     packages: [
       {
         packageName: "gimp",
@@ -127,7 +125,6 @@ export const RECOMMENDATION_PRESETS: CategoryPreset[] = [
   {
     category: "multimedia",
     description: "Audio, video editing and media management tools",
-    icon: "🎬",
     packages: [
       {
         packageName: "vlc",
@@ -176,7 +173,6 @@ export const RECOMMENDATION_PRESETS: CategoryPreset[] = [
   {
     category: "system-tools",
     description: "System administration, security and utilities",
-    icon: "⚙️",
     packages: [
       {
         packageName: "htop",
@@ -225,7 +221,6 @@ export const RECOMMENDATION_PRESETS: CategoryPreset[] = [
   {
     category: "gaming",
     description: "Gaming platforms and related tools",
-    icon: "🎮",
     packages: [
       {
         packageName: "steam",
@@ -260,7 +255,6 @@ export const RECOMMENDATION_PRESETS: CategoryPreset[] = [
   {
     category: "productivity",
     description: "Office, note-taking and productivity tools",
-    icon: "📝",
     packages: [
       {
         packageName: "libreoffice",
@@ -302,7 +296,6 @@ export const RECOMMENDATION_PRESETS: CategoryPreset[] = [
   {
     category: "education",
     description: "Educational and scientific software",
-    icon: "🎓",
     packages: [
       {
         packageName: "anki",

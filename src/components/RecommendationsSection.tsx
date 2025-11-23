@@ -3,12 +3,14 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Sparkles, RefreshCw, Settings, Package as PackageIcon, Star, Grid3x3, List, TrendingUp, Award, Info, ChevronDown, ChevronUp } from 'lucide-react'
-import { RecommendedPackage } from '@/types/recommendations'
+import { Sparkles, RefreshCw, Settings, Package as PackageIcon, Star, Grid3x3, List, TrendingUp, Award, ChevronDown, ChevronUp } from 'lucide-react'
+import { RecommendedPackage, UserCategory } from '@/types/recommendations'
 import { Package } from '@/types'
 import { useLocale } from '@/contexts/LocaleContext'
 import { useRecommendationProfile } from '@/hooks/useRecommendationProfile'
-import { RECOMMENDATION_PRESETS } from '@/data/recommendationPresets'
+import { CATEGORY_ICONS } from '@/constants/categoryIcons'
+import { RecommendationCard } from './RecommendationCard'
+import { RecommendationListItem } from './RecommendationListItem'
 
 interface RecommendationsSectionProps {
     onPackageToggle: (pkg: Package) => void
@@ -96,12 +98,6 @@ export function RecommendationsSection({
 
     const isPackageSelected = (pkg: RecommendedPackage) => {
         return selectedPackages.some(selected => selected.id === pkg.id)
-    }
-
-    // Get category icon from presets
-    const getCategoryIcon = (category: string): string => {
-        const preset = RECOMMENDATION_PRESETS.find(p => p.category === category)
-        return preset?.icon || '📦'
     }
 
     // Get package count per category
@@ -258,29 +254,40 @@ export function RecommendationsSection({
 
                 {/* Filters and View Controls */}
                 {isExpanded && !loading && !error && recommendations.length > 0 && (
-                    <div className="flex flex-wrap items-center gap-3 mt-4 pt-4 border-t">
+                    <div
+                        className="flex flex-wrap items-center gap-3 mt-4 pt-4 border-t"
+                        onClick={(e) => e.stopPropagation()} // Prevent collapse when clicking filter area
+                    >
                         {/* Category Filter Tabs */}
                         <div className="flex flex-wrap gap-2">
                             <Button
                                 variant={filterCategory === 'all' ? 'default' : 'outline'}
                                 size="sm"
-                                onClick={() => setFilterCategory('all')}
+                                onClick={(e) => {
+                                    e.stopPropagation()
+                                    setFilterCategory('all')
+                                }}
                                 className="h-8 text-xs"
                             >
                                 All ({recommendations.length})
                             </Button>
                             {profile.categories.map(cat => {
                                 const count = getCategoryCount(cat)
+                                const Icon = CATEGORY_ICONS[cat]
                                 return (
                                     <Button
                                         key={cat}
                                         variant={filterCategory === cat ? 'default' : 'outline'}
                                         size="sm"
-                                        onClick={() => setFilterCategory(cat)}
+                                        onClick={(e) => {
+                                            e.stopPropagation()
+                                            setFilterCategory(cat)
+                                        }}
                                         className="h-8 text-xs"
                                         disabled={count === 0}
                                     >
-                                        {getCategoryIcon(cat)} {t(`categories.${cat}.name`)} ({count})
+                                        {Icon && <Icon className="h-3 w-3 mr-1.5" />}
+                                        {t(`categories.${cat}.name`)} ({count})
                                     </Button>
                                 )
                             })}
@@ -292,7 +299,10 @@ export function RecommendationsSection({
                                 <Button
                                     variant={sortMode === 'recommended' ? 'default' : 'ghost'}
                                     size="sm"
-                                    onClick={() => setSortMode('recommended')}
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        setSortMode('recommended')
+                                    }}
                                     className="h-8 text-xs rounded-r-none"
                                 >
                                     <Award className="h-3 w-3 mr-1" />
@@ -301,7 +311,10 @@ export function RecommendationsSection({
                                 <Button
                                     variant={sortMode === 'popularity' ? 'default' : 'ghost'}
                                     size="sm"
-                                    onClick={() => setSortMode('popularity')}
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        setSortMode('popularity')
+                                    }}
                                     className="h-8 text-xs rounded-none border-x"
                                 >
                                     <TrendingUp className="h-3 w-3 mr-1" />
@@ -310,7 +323,10 @@ export function RecommendationsSection({
                                 <Button
                                     variant={sortMode === 'preset' ? 'default' : 'ghost'}
                                     size="sm"
-                                    onClick={() => setSortMode('preset')}
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        setSortMode('preset')
+                                    }}
                                     className="h-8 text-xs rounded-l-none"
                                 >
                                     <Star className="h-3 w-3 mr-1" />
@@ -323,7 +339,10 @@ export function RecommendationsSection({
                                 <Button
                                     variant={viewMode === 'grid' ? 'default' : 'ghost'}
                                     size="sm"
-                                    onClick={() => setViewMode('grid')}
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        setViewMode('grid')
+                                    }}
                                     className="h-8 w-8 p-0 rounded-r-none"
                                 >
                                     <Grid3x3 className="h-4 w-4" />
@@ -331,7 +350,10 @@ export function RecommendationsSection({
                                 <Button
                                     variant={viewMode === 'compact' ? 'default' : 'ghost'}
                                     size="sm"
-                                    onClick={() => setViewMode('compact')}
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        setViewMode('compact')
+                                    }}
                                     className="h-8 w-8 p-0 rounded-l-none border-l"
                                 >
                                     <List className="h-4 w-4" />
@@ -376,75 +398,12 @@ export function RecommendationsSection({
                     {!loading && !error && recommendations.length > 0 && viewMode === 'grid' && (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {filteredAndSortedRecommendations.map(pkg => (
-                                <Card
+                                <RecommendationCard
                                     key={pkg.id}
-                                    className={`relative overflow-hidden transition-all hover:shadow-lg cursor-pointer ${isPackageSelected(pkg) ? 'ring-2 ring-primary' : ''
-                                        }`}
-                                    onClick={() => onPackageToggle(pkg)}
-                                >
-                                    {pkg.presetMatch && (
-                                        <div className="absolute top-2 right-2">
-                                            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground">
-                                                <Star className="h-3 w-3" />
-                                                {t('recommendations.preset_badge')}
-                                            </span>
-                                        </div>
-                                    )}
-
-                                    <CardContent className="p-4">
-                                        <div className="flex items-start gap-3 mb-3">
-                                            <PackageIcon className="h-8 w-8 text-primary flex-shrink-0" />
-                                            <div className="flex-1 min-w-0">
-                                                <h3 className="font-semibold truncate">{pkg.name}</h3>
-                                                <p className="text-xs text-muted-foreground">{pkg.version}</p>
-                                            </div>
-                                        </div>
-
-                                        <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
-                                            {pkg.description}
-                                        </p>
-
-                                        {/* Recommendation score and reason */}
-                                        <div className="space-y-2">
-                                            <div className="flex items-center justify-between">
-                                                <span className="text-xs text-muted-foreground">
-                                                    {t('recommendations.score')}
-                                                </span>
-                                                <div className="flex items-center gap-1">
-                                                    <div className="h-2 w-16 bg-secondary rounded-full overflow-hidden">
-                                                        <div
-                                                            className="h-full bg-primary rounded-full transition-all"
-                                                            style={{ width: `${pkg.recommendationScore}%` }}
-                                                        />
-                                                    </div>
-                                                    <span className="text-xs font-semibold">{pkg.recommendationScore}%</span>
-                                                </div>
-                                            </div>
-
-                                            {pkg.recommendationReason && (
-                                                <div className="pt-2 border-t">
-                                                    <p className="text-xs text-muted-foreground">
-                                                        <span className="font-semibold">{t('recommendations.reason')}</span>
-                                                        {' '}
-                                                        {pkg.recommendationReason}
-                                                    </p>
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        <Button
-                                            variant={isPackageSelected(pkg) ? 'default' : 'outline'}
-                                            size="sm"
-                                            className="w-full mt-3"
-                                            onClick={(e) => {
-                                                e.stopPropagation()
-                                                onPackageToggle(pkg)
-                                            }}
-                                        >
-                                            {isPackageSelected(pkg) ? '✓ Selected' : t('recommendations.add_to_selection')}
-                                        </Button>
-                                    </CardContent>
-                                </Card>
+                                    pkg={pkg}
+                                    isSelected={isPackageSelected(pkg)}
+                                    onToggle={onPackageToggle}
+                                />
                             ))}
                         </div>
                     )}
@@ -453,68 +412,12 @@ export function RecommendationsSection({
                     {!loading && !error && recommendations.length > 0 && viewMode === 'compact' && (
                         <div className="space-y-2">
                             {filteredAndSortedRecommendations.map(pkg => (
-                                <div
+                                <RecommendationListItem
                                     key={pkg.id}
-                                    className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all cursor-pointer hover:shadow-md ${isPackageSelected(pkg)
-                                        ? 'border-primary bg-primary/5'
-                                        : 'border-border hover:border-primary/50'
-                                        }`}
-                                    onClick={() => onPackageToggle(pkg)}
-                                >
-                                    {/* Package Icon */}
-                                    <PackageIcon className="h-6 w-6 text-primary flex-shrink-0" />
-
-                                    {/* Package Info */}
-                                    <div className="flex-1 min-w-0">
-                                        <div className="flex items-center gap-2">
-                                            <h4 className="font-semibold text-sm truncate">{pkg.name}</h4>
-                                            {pkg.presetMatch && (
-                                                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-semibold bg-primary text-primary-foreground">
-                                                    <Star className="h-2.5 w-2.5" />
-                                                    Essential
-                                                </span>
-                                            )}
-                                            <span className="text-xs text-muted-foreground">{pkg.version}</span>
-                                        </div>
-                                        <p className="text-xs text-muted-foreground truncate">{pkg.description}</p>
-                                    </div>
-
-                                    {/* Score Badge */}
-                                    <div className="flex items-center gap-2 flex-shrink-0">
-                                        <div className="text-right">
-                                            <div className="text-xs font-semibold text-primary">
-                                                {pkg.recommendationScore}%
-                                            </div>
-                                            <div className="text-xs text-muted-foreground">
-                                                match
-                                            </div>
-                                        </div>
-
-                                        {/* Info Tooltip */}
-                                        {pkg.recommendationReason && (
-                                            <div className="relative group">
-                                                <Info className="h-4 w-4 text-muted-foreground cursor-help" />
-                                                <div className="absolute right-0 top-full mt-2 w-64 p-2 bg-popover text-popover-foreground text-xs rounded-md shadow-lg border opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                                                    <p className="font-semibold mb-1">Why recommended?</p>
-                                                    <p>{pkg.recommendationReason}</p>
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {/* Select Button */}
-                                        <Button
-                                            variant={isPackageSelected(pkg) ? 'default' : 'outline'}
-                                            size="sm"
-                                            className="ml-2"
-                                            onClick={(e) => {
-                                                e.stopPropagation()
-                                                onPackageToggle(pkg)
-                                            }}
-                                        >
-                                            {isPackageSelected(pkg) ? '✓' : '+'}
-                                        </Button>
-                                    </div>
-                                </div>
+                                    pkg={pkg}
+                                    isSelected={isPackageSelected(pkg)}
+                                    onToggle={onPackageToggle}
+                                />
                             ))}
                         </div>
                     )}

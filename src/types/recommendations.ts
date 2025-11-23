@@ -85,7 +85,7 @@ export interface CategoryPreset {
   category: UserCategory;
   packages: PackagePreset[];
   description: string;
-  icon: string;
+  // Icon removed in favor of UI-side mapping
 }
 
 /**
