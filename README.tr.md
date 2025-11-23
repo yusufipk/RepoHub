@@ -107,7 +107,7 @@ RepoHub, kullanıcılara kişiselleştirilmiş öneriler sunmak için düzenlenm
 
 ### Paket Nasıl Eklenir
 
-Paket önerileri `/src/data/recommendationPresets.ts` dosyasında saklanır. İşte bir paket ekleme adımları:
+Paket önerileri `[/src/data/recommendationPresets.ts](./src/data/recommendationPresets.ts)` dosyasında saklanır.
 
 #### 1. Doğru Konumu Bulun
 
@@ -206,7 +206,7 @@ windows: {
 Paketin önerilerde daha iyi görünmesi için `PACKAGE_ICONS` içine bir ikon eşlemesi ekleyin:
 
 1.  [Simple Icons](https://simpleicons.org/)'da paket slug'ını bulun
-2.  `src/data/recommendationPresets.ts` dosyasındaki `PACKAGE_ICONS` nesnesine ekleyin:
+2.  [src/data/recommendationPresets.ts](./src/data/recommendationPresets.ts) dosyasındaki `PACKAGE_ICONS` nesnesine ekleyin:
 
 ```typescript
 export const PACKAGE_ICONS: Record<string, string> = {
@@ -235,15 +235,15 @@ export const PACKAGE_ICONS: Record<string, string> = {
    - İlgili kategoriyi seçin
    - Paketinizin önerilerde görünüp görünmediğini kontrol edin
 
-### En İyi Uygulamalar
+### Kısaca
 
-**YAPIN ✅**
+**✅**
 - Doğrulama scriptini kullanarak paket adlarını doğrulayın
-- Popüler, iyi bakımlı paketler ekleyin
+- Popüler olan paketler ekleyin
 - Göndermeden önce test edin
 - Resmi depolardan tam paket adlarını kullanın
 
-**YAPMAYIN ❌**
+**❌**
 - Paket adlarını tahmin etmeyin
 - Kullanımdan kaldırılmış paketler eklemeyin
 - Doğrulamayı atlamayın
@@ -260,8 +260,6 @@ Windows Önerilerine Popüler Geliştirme Araçları Eklendi
 ```
 
 ## 🤝 Katkıda Bulunma
-
-Katkılar hoş karşılanır! Lütfen Pull Request göndermekten çekinmeyin.
 
 1.  Projeyi fork edin
 2.  Feature branch'inizi oluşturun (`git checkout -b feature/HarikaBirOzellik`)

@@ -107,7 +107,7 @@ RepoHub uses curated package lists to provide personalized recommendations to us
 
 ### How to Add Packages
 
-Package recommendations are stored in `/src/data/recommendationPresets.ts`. Here's how to add a package:
+Package recommendations are stored in [/src/data/recommendationPresets.ts](./src/data/recommendationPresets.ts). Here's how to add a package:
 
 #### 1. Find the Right Location
 
@@ -206,7 +206,7 @@ windows: {
 To make the package look better in recommendations, add an icon mapping in `PACKAGE_ICONS`:
 
 1.  Find the package slug on [Simple Icons](https://simpleicons.org/)
-2.  Add it to the `PACKAGE_ICONS` object in `src/data/recommendationPresets.ts`:
+2.  Add it to the `PACKAGE_ICONS` object in [src/data/recommendationPresets.ts](./src/data/recommendationPresets.ts):
 
 ```typescript
 export const PACKAGE_ICONS: Record<string, string> = {
