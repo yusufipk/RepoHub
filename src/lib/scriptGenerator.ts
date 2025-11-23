@@ -1,4 +1,4 @@
-import { SelectedPackage, Platform, GeneratedScript } from '@/types'
+import { GeneratedScript, Platform, SelectedPackage } from '@/types'
 
 export function generateScript(packages: SelectedPackage[], platform: Platform): GeneratedScript {
   const script = createScriptContent(packages, platform)
@@ -110,14 +110,22 @@ set -e
 
 echo "Starting package installation for Arch Linux..."
 
-# Check if yay is installed
-if ! command -v yay &> /dev/null; then
-    echo "yay is not installed. Installing yay..."
-    
+AUR_HELPER=""
+
+# Check for paru or yay
+if command -v paru &> /dev/null; then
+    echo "paru detected."
+    AUR_HELPER="paru"
+elif command -v yay &> /dev/null; then
+    echo "yay detected."
+    AUR_HELPER="yay"
+else
+    echo "Neither paru nor yay is installed. Installing yay..."
+
     # Install dependencies
     echo "Installing dependencies..."
     sudo pacman -S --needed --noconfirm git base-devel
-    
+
     # Clone and build yay
     echo "Building yay..."
     git clone https://aur.archlinux.org/yay-bin.git
@@ -125,19 +133,18 @@ if ! command -v yay &> /dev/null; then
     makepkg -si --noconfirm
     cd ..
     rm -rf yay-bin
-    
+
     echo "yay installed successfully!"
-else
-    echo "yay is already installed."
+    AUR_HELPER="yay"
 fi
 
 # Update package lists
-echo "Updating package lists..."
-yay -Sy --noconfirm
+echo "Updating package lists with $AUR_HELPER..."
+$AUR_HELPER -Sy --noconfirm
 
 # Install packages
 echo "Installing packages: ${packageNames}"
-yay -S --noconfirm ${packageNames}
+$AUR_HELPER -S --noconfirm ${packageNames}
 
 # Verify installation
 echo "Verifying installation..."
