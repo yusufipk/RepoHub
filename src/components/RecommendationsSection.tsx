@@ -32,9 +32,11 @@ export function RecommendationsSection({
     profile
 }: RecommendationsSectionProps) {
     const { t } = useLocale()
-    const { getEffectiveOS, isProfileComplete } = useRecommendationProfile()
-    // Override profile from hook with prop
-    const effectiveProfile = profile
+    
+    // Derived state from props
+    const getEffectiveOS = () => profile.selectedOS || profile.detectedOS || "ubuntu"
+    const isProfileComplete = () => profile.categories.length > 0 && getEffectiveOS() !== "unknown"
+
     const [recommendations, setRecommendations] = useState<RecommendedPackage[]>([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
@@ -59,8 +61,8 @@ export function RecommendationsSection({
                 },
                 body: JSON.stringify({
                     platform_id: getEffectiveOS(),
-                    categories: effectiveProfile.categories,
-                    experienceLevel: effectiveProfile.experienceLevel,
+                    categories: profile.categories,
+                    experienceLevel: profile.experienceLevel,
                     limit: 1000
                 })
             })
@@ -103,7 +105,7 @@ export function RecommendationsSection({
             // But for now, let's rely on the cache key changing which includes profile data
             fetchRecommendations()
         }
-    }, [effectiveProfile.categories, effectiveProfile.selectedOS, effectiveProfile.experienceLevel])
+    }, [profile.categories, profile.selectedOS, profile.experienceLevel])
 
     const isPackageSelected = (pkg: RecommendedPackage) => {
         return selectedPackages.some(selected => selected.id === pkg.id)
@@ -239,7 +241,7 @@ export function RecommendationsSection({
                         <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">
                             {getEffectiveOS()}
                         </span>
-                        {effectiveProfile.categories.map(cat => (
+                        {profile.categories.map(cat => (
                             <span
                                 key={cat}
                                 className="text-xs px-2 py-1 rounded-full bg-secondary text-secondary-foreground"
@@ -269,7 +271,7 @@ export function RecommendationsSection({
                             >
                                 All ({recommendations.length})
                             </Button>
-                            {effectiveProfile.categories.map(cat => {
+                            {profile.categories.map(cat => {
                                 const count = getCategoryCount(cat)
                                 const Icon = CATEGORY_ICONS[cat]
                                 return (
