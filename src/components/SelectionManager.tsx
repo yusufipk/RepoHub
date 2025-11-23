@@ -89,11 +89,6 @@ export function SelectionManager({
             </div>
           ))}
         </div>
-        <div className="mt-4 p-3 bg-muted rounded-lg">
-          <p className="text-sm text-muted-foreground">
-            <strong>Note:</strong> {t('selection.note')}
-          </p>
-        </div>
       </CardContent>
     </Card>
   )
