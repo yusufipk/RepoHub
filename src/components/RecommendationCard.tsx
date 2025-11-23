@@ -1,4 +1,4 @@
-import { Package as PackageIcon, Star } from 'lucide-react'
+import { Package as PackageIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { RecommendedPackage } from '@/types/recommendations'
@@ -19,14 +19,7 @@ export function RecommendationCard({ pkg, isSelected, onToggle }: Recommendation
                 }`}
             onClick={() => onToggle(pkg)}
         >
-            {pkg.presetMatch && (
-                <div className="absolute top-2 right-2">
-                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground">
-                        <Star className="h-3 w-3" />
-                        {t('recommendations.preset_badge')}
-                    </span>
-                </div>
-            )}
+
 
             <CardContent className="p-4">
                 <div className="flex items-start gap-3 mb-3">

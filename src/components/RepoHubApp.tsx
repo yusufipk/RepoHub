@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { LocaleProvider } from '@/contexts/LocaleContext'
 import { Header } from './Header'
 import { PlatformSelector } from './PlatformSelector'
@@ -28,7 +28,8 @@ function RepoHubAppContent({ cryptomusEnabled }: { cryptomusEnabled: boolean }) 
     isLoading: isProfileLoading,
     hasCompletedOnboarding,
     saveProfile,
-    detectedOS
+    detectedOS,
+    getEffectiveOS
   } = useRecommendationProfile()
 
   const [showOnboarding, setShowOnboarding] = useState(false)
@@ -148,7 +149,24 @@ function RepoHubAppContent({ cryptomusEnabled }: { cryptomusEnabled: boolean }) 
   const handleCloseScriptPreview = () => {
     setGeneratedScript(null)
   }
+  // Track previous effective OS to detect profile changes
+  const prevEffectiveOS = useRef<string | null>(null)
 
+  // Calculate current effective OS
+  const effectiveOS = getEffectiveOS()
+
+  // Sync platform selection with profile changes
+  useEffect(() => {
+    if (hasCompletedOnboarding && availablePlatforms.length > 0) {
+      const platform = availablePlatforms.find(p => p.id === effectiveOS)
+
+      // If profile OS changed, or if no platform is selected yet, update selection
+      if (platform && (effectiveOS !== prevEffectiveOS.current || !selectedPlatform)) {
+        setSelectedPlatform(platform)
+        prevEffectiveOS.current = effectiveOS
+      }
+    }
+  }, [hasCompletedOnboarding, effectiveOS, availablePlatforms, selectedPlatform])
   return (
     <div key={locale} className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
       <Header
@@ -183,10 +201,16 @@ function RepoHubAppContent({ cryptomusEnabled }: { cryptomusEnabled: boolean }) 
             />
           )}
 
+
+
+
+
           {/* Platform Selector */}
           <PlatformSelector
             selectedPlatform={selectedPlatform}
             onPlatformSelect={handlePlatformSelect}
+            isLocked={selectedPackages.length > 0}
+            lockedMessage="Clear your selection to switch platforms"
           />
 
           {/* Package Browser */}

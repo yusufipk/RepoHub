@@ -1,4 +1,4 @@
-import { Package as PackageIcon, Star, Info } from 'lucide-react'
+import { Package as PackageIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { RecommendedPackage } from '@/types/recommendations'
 
@@ -24,12 +24,6 @@ export function RecommendationListItem({ pkg, isSelected, onToggle }: Recommenda
             <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                     <h4 className="font-semibold text-sm truncate">{pkg.name}</h4>
-                    {pkg.presetMatch && (
-                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-semibold bg-primary text-primary-foreground">
-                            <Star className="h-2.5 w-2.5" />
-                            Essential
-                        </span>
-                    )}
                     <span className="text-xs text-muted-foreground">{pkg.version}</span>
                 </div>
                 <p className="text-xs text-muted-foreground truncate">{pkg.description}</p>
