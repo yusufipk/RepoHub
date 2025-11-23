@@ -68,7 +68,6 @@ function getDefaultProfile(): UserProfile {
     categories: [],
     detectedOS: detectOS(),
     selectedOS: undefined,
-    experienceLevel: "beginner",
     hasCompletedOnboarding: false,
     createdAt: new Date().toISOString(),
     lastUpdated: new Date().toISOString(),
@@ -166,13 +165,7 @@ export function useRecommendationProfile() {
     [saveProfile]
   );
 
-  // Update experience level
-  const updateExperienceLevel = useCallback(
-    (level: ExperienceLevel) => {
-      return saveProfile({ experienceLevel: level });
-    },
-    [saveProfile]
-  );
+
 
   // Mark onboarding as completed
   const completeOnboarding = useCallback(() => {
@@ -208,7 +201,6 @@ export function useRecommendationProfile() {
     saveProfile,
     updateCategories,
     updateSelectedOS,
-    updateExperienceLevel,
     completeOnboarding,
     resetProfile,
     getEffectiveOS,

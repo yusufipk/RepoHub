@@ -14,7 +14,8 @@ const translations = {
       next: "Next",
       back: "Back",
       select_all: "Select All",
-      deselect_all: "Deselect All"
+      deselect_all: "Deselect All",
+      finish: "Finish"
     },
     platform: {
       select: "Select Your Platform",
@@ -117,9 +118,7 @@ const translations = {
       complete: "Get My Recommendations",
       step1: {
         title: "What do you want to use your computer for?",
-        description: "Select up to 3 categories that match your needs",
-        selected: "{count} selected (max 3)",
-        all_selected: "All {count} categories selected"
+        description: "Select the categories that match your needs"
       },
       step2: {
         title: "Select your operating system",
@@ -205,7 +204,8 @@ const translations = {
       next: "İleri",
       back: "Geri",
       select_all: "Tümünü Seç",
-      deselect_all: "Seçimi Kaldır"
+      deselect_all: "Seçimi Kaldır",
+      finish: "Bitir"
     },
     platform: {
       select: "Platformunuzu Seçin",
@@ -308,9 +308,7 @@ const translations = {
       complete: "Önerilerimi Getir",
       step1: {
         title: "Bilgisayarınızı ne için kullanmak istiyorsunuz?",
-        description: "İhtiyaçlarınıza uygun en fazla 3 kategori seçin",
-        selected: "{count} seçildi (max 3)",
-        all_selected: "Tüm {count} kategori seçildi"
+        description: "İhtiyaçlarınıza uygun kategorileri seçin"
       },
       step2: {
         title: "İşletim sisteminizi seçin",
