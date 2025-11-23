@@ -23,7 +23,9 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
       "PuTTY.PuTTY",
       "WinMerge.WinMerge",
       "EclipseFoundation.Eclipse",
-      "Anysphere.Cursor"
+      "Anysphere.Cursor",
+      "Microsoft.VisualStudio.2022.Community
+
     ],
     "design": [
       "GIMP.GIMP",
@@ -76,7 +78,8 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
       "Valve.Steam",
       "Discord.Discord",
       "EpicGames.EpicGamesLauncher",
-      "GOG.Galaxy"
+      "GOG.Galaxy",
+      "Playnite.Playnite"
     ],
     "productivity": [
       "Notion.Notion",
@@ -154,6 +157,7 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
       "steam",
       "discord",
       "epic-games"
+      
     ],
     "productivity": [
       "notion",
