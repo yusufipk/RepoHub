@@ -65,6 +65,7 @@ export interface RecommendedPackage {
   recommendationReason: string;
   presetMatch?: boolean;
   matchedCategory?: UserCategory; // Which user category this package matched
+  icon?: string;
 }
 
 /**

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Package as PackageIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { RecommendedPackage } from '@/types/recommendations'
@@ -9,6 +10,8 @@ interface RecommendationListItemProps {
 }
 
 export function RecommendationListItem({ pkg, isSelected, onToggle }: RecommendationListItemProps) {
+    const [iconError, setIconError] = useState(false)
+
     return (
         <div
             className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all cursor-pointer hover:shadow-md ${isSelected
@@ -18,7 +21,32 @@ export function RecommendationListItem({ pkg, isSelected, onToggle }: Recommenda
             onClick={() => onToggle(pkg)}
         >
             {/* Package Icon */}
-            <PackageIcon className="h-6 w-6 text-primary flex-shrink-0" />
+            {pkg.icon && !iconError ? (
+                <>
+                    <div 
+                        className="h-6 w-6 flex-shrink-0 bg-foreground"
+                        style={{
+                            maskImage: `url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/${pkg.icon}.svg)`,
+                            WebkitMaskImage: `url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/${pkg.icon}.svg)`,
+                            maskRepeat: 'no-repeat',
+                            WebkitMaskRepeat: 'no-repeat',
+                            maskSize: 'contain',
+                            WebkitMaskSize: 'contain',
+                            maskPosition: 'center',
+                            WebkitMaskPosition: 'center'
+                        }}
+                    />
+                    {/* Hidden image to detect load errors */}
+                    <img 
+                        src={`https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/${pkg.icon}.svg`}
+                        alt=""
+                        className="hidden"
+                        onError={() => setIconError(true)}
+                    />
+                </>
+            ) : (
+                <PackageIcon className="h-6 w-6 text-foreground flex-shrink-0" />
+            )}
 
             {/* Package Info */}
             <div className="flex-1 min-w-0">

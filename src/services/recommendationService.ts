@@ -4,7 +4,7 @@ import {
   RecommendedPackage,
   UserCategory,
 } from "@/types/recommendations";
-import { getPackagesWithCategories, getPresetDetails } from "@/data/recommendationPresets";
+import { getPackagesWithCategories, getPresetDetails, getPresetIcon } from "@/data/recommendationPresets";
 
 export class RecommendationService {
   /**
@@ -65,14 +65,15 @@ export class RecommendationService {
     const packages: Package[] = [];
 
     for (const { name, category } of packagesInfo) {
-      const { description } = getPresetDetails(name);
+      // Get icon slug if available
+      const iconSlug = getPresetIcon(name);
       
       // Create a mock package object to avoid database queries
       // This ensures instant loading for recommendations
       const mockPackage: Package = {
         id: `${platformId}:${name.toLowerCase()}`, 
         name: name,
-        description: description,
+        description: "", // Description removed as requested
         version: "latest",
         platform_id: platformId,
         type: "cli", 
@@ -86,8 +87,18 @@ export class RecommendationService {
             id: platformId,
             name: platformId.charAt(0).toUpperCase() + platformId.slice(1),
             package_manager: "unknown" 
-        }
+        },
+        // We attach the icon slug to the tags temporarily or we can add a custom field if we extend the type
+        // But simpler is to pass it through the system.
+        // Actually, Package interface doesn't have icon. 
+        // RecommendedPackage does (we added it).
+        // So we need to handle this in scorePackage or casting.
       };
+
+      // Hack: Store icon slug in tags so it survives until scorePackage
+      if (iconSlug) {
+        mockPackage.tags = [`icon:${iconSlug}`];
+      }
 
       packages.push(mockPackage);
       categoryMap.set(mockPackage.id, category);
@@ -124,6 +135,15 @@ export class RecommendationService {
   ): RecommendedPackage {
     const isPresetMatch = presetPackageNames.includes(pkg.name);
 
+    // Extract icon from tags if present
+    let icon: string | undefined;
+    if (pkg.tags) {
+      const iconTag = pkg.tags.find(tag => tag.startsWith('icon:'));
+      if (iconTag) {
+        icon = iconTag.replace('icon:', '');
+      }
+    }
+
     // Simplified score: just use popularity score (0-100)
     // Give a boost to preset packages so they appear first
     let finalScore = pkg.popularity_score || 0;
@@ -155,6 +175,7 @@ export class RecommendationService {
       recommendationReason: "", // Removed as requested
       presetMatch: isPresetMatch,
       matchedCategory: matchedCategory,
+      icon: icon
     };
   }
 

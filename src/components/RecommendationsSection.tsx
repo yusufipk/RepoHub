@@ -41,7 +41,6 @@ export function RecommendationsSection({
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [viewMode, setViewMode] = useState<ViewMode>('grid')
-    const [sortMode, setSortMode] = useState<SortMode>('recommended')
     const [filterCategory, setFilterCategory] = useState<FilterCategory>('all')
     const [isExpanded, setIsExpanded] = useState(false)
 
@@ -116,8 +115,8 @@ export function RecommendationsSection({
         return recommendations.filter(pkg => pkg.matchedCategory === category).length
     }
 
-    // Filter and sort recommendations
-    const filteredAndSortedRecommendations = useMemo(() => {
+    // Filter recommendations
+    const filteredRecommendations = useMemo(() => {
         let result = [...recommendations]
 
         // Filter by category
@@ -125,26 +124,8 @@ export function RecommendationsSection({
             result = result.filter(pkg => pkg.matchedCategory === filterCategory)
         }
 
-        // Sort
-        switch (sortMode) {
-            case 'popularity':
-                result.sort((a, b) => (b.popularity || 0) - (a.popularity || 0))
-                break
-            case 'preset':
-                result.sort((a, b) => {
-                    if (a.presetMatch && !b.presetMatch) return -1
-                    if (!a.presetMatch && b.presetMatch) return 1
-                    return b.recommendationScore - a.recommendationScore
-                })
-                break
-            case 'recommended':
-            default:
-                result.sort((a, b) => b.recommendationScore - a.recommendationScore)
-                break
-        }
-
         return result
-    }, [recommendations, filterCategory, sortMode])
+    }, [recommendations, filterCategory])
 
     if (!isProfileComplete()) {
         return null
@@ -294,46 +275,6 @@ export function RecommendationsSection({
                         </div>
 
                         <div className="flex items-center gap-2 ml-auto">
-                            {/* Sort Dropdown */}
-                            <div className="flex items-center gap-1 border rounded-md">
-                                <Button
-                                    variant={sortMode === 'recommended' ? 'default' : 'ghost'}
-                                    size="sm"
-                                    onClick={(e) => {
-                                        e.stopPropagation()
-                                        setSortMode('recommended')
-                                    }}
-                                    className="h-8 text-xs rounded-r-none"
-                                >
-                                    <Award className="h-3 w-3 mr-1" />
-                                    {t('recommendations.sort.recommended') || 'Best Match'}
-                                </Button>
-                                <Button
-                                    variant={sortMode === 'popularity' ? 'default' : 'ghost'}
-                                    size="sm"
-                                    onClick={(e) => {
-                                        e.stopPropagation()
-                                        setSortMode('popularity')
-                                    }}
-                                    className="h-8 text-xs rounded-none border-x"
-                                >
-                                    <TrendingUp className="h-3 w-3 mr-1" />
-                                    {t('recommendations.sort.popular') || 'Popular'}
-                                </Button>
-                                <Button
-                                    variant={sortMode === 'preset' ? 'default' : 'ghost'}
-                                    size="sm"
-                                    onClick={(e) => {
-                                        e.stopPropagation()
-                                        setSortMode('preset')
-                                    }}
-                                    className="h-8 text-xs rounded-l-none"
-                                >
-                                    <Star className="h-3 w-3 mr-1" />
-                                    {t('recommendations.sort.preset') || 'Essential'}
-                                </Button>
-                            </div>
-
                             {/* View Mode Toggle */}
                             <div className="flex items-center border rounded-md">
                                 <Button
@@ -397,7 +338,7 @@ export function RecommendationsSection({
 
                     {!loading && !error && recommendations.length > 0 && viewMode === 'grid' && (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {filteredAndSortedRecommendations.map(pkg => (
+                            {filteredRecommendations.map(pkg => (
                                 <RecommendationCard
                                     key={pkg.id}
                                     pkg={pkg}
@@ -411,7 +352,7 @@ export function RecommendationsSection({
                     {/* Compact View Mode */}
                     {!loading && !error && recommendations.length > 0 && viewMode === 'compact' && (
                         <div className="space-y-2">
-                            {filteredAndSortedRecommendations.map(pkg => (
+                            {filteredRecommendations.map(pkg => (
                                 <RecommendationListItem
                                     key={pkg.id}
                                     pkg={pkg}

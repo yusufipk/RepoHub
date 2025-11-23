@@ -583,6 +583,191 @@ export const PRESET_DESCRIPTIONS: Record<string, string> = {
   "zotero": "Your personal research assistant"
 };
 
+export const PACKAGE_ICONS: Record<string, string> = {
+  // Development
+  "git": "git",
+  "Git.Git": "git",
+  "curl": "curl",
+  "wget": "gnu",
+  "nodejs": "nodedotjs",
+  "npm": "npm",
+  "python3": "python",
+  "python3-pip": "pypi",
+  "python-pip": "pypi",
+  "docker.io": "docker",
+  "Docker.DockerDesktop": "docker",
+  "dotnet-sdk-8.0": "dotnet",
+  "dotnet-sdk": "dotnet",
+  "Microsoft.VisualStudioCode": "visualstudiocode",
+  "visual-studio-code": "visualstudiocode",
+  "code": "visualstudiocode",
+  "Postman.Postman": "postman",
+  "postman": "postman",
+  "Microsoft.WindowsTerminal": "windows",
+  "iterm2": "iterm2",
+  "warp": "warp",
+  "sublime-text": "sublimetext",
+  "build-essential": "linux",
+  "base-devel": "archlinux",
+  "java-17-openjdk-devel": "openjdk",
+  "jdk17-openjdk": "openjdk",
+  "temurin": "eclipse",
+  "Anysphere.Cursor": "cursor",
+  "cursor": "cursor",
+  "EclipseFoundation.Eclipse": "eclipse",
+  "WinSCP.WinSCP": "winscp",
+  "PuTTY.PuTTY": "putty",
+
+  // Design
+  "gimp": "gimp",
+  "GIMP.GIMP": "gimp",
+  "inkscape": "inkscape",
+  "Inkscape.Inkscape": "inkscape",
+  "blender": "blender",
+  "BlenderFoundation.Blender": "blender",
+  "krita": "krita",
+  "KDE.Krita": "krita",
+  "darktable": "darktable",
+  "xnviewmp": "xnview",
+  "XnSoft.XnViewMP": "xnview",
+  "IrfanSkiljan.IrfanView": "irfanview",
+  "FastStone.Viewer": "imagej", // Placeholder, no icon
+  "ShareX.ShareX": "sharex",
+  "Greenshot.Greenshot": "greenshot",
+
+  // Multimedia
+  "vlc": "vlcmediaplayer",
+  "VideoLAN.VLC": "vlcmediaplayer",
+  "audacity": "audacity",
+  "Audacity.Audacity": "audacity",
+  "obs-studio": "obsstudio",
+  "obs": "obsstudio",
+  "OBSProject.OBSStudio": "obsstudio",
+  "ffmpeg": "ffmpeg",
+  "mpv": "mpv",
+  "handbrake": "handbrake",
+  "HandBrake.HandBrake": "handbrake",
+  "kdenlive": "kdenlive",
+  "spotify": "spotify",
+  "Spotify.Spotify": "spotify",
+  "Apple.iTunes": "itunes",
+  "foobar2000": "foobar2000",
+  "PeterPawlowski.foobar2000": "foobar2000",
+  "Winamp.Winamp": "winamp",
+  "AIMP.AIMP": "aimp",
+  "iina": "iina",
+
+  // System Tools
+  "htop": "htop",
+  "fastfetch": "linux",
+  "neofetch": "linux",
+  "tmux": "tmux",
+  "zsh": "zsh",
+  "gparted": "gparted",
+  "timeshift": "linux",
+  "stacer": "linux",
+  "keepassxc": "keepassxc",
+  "DominikReichl.KeePass": "keepass",
+  "synaptic": "debian",
+  "7zip.7zip": "7zip",
+  "Microsoft.PowerToys": "windows",
+  "voidtools.Everything": "windows",
+  "RARLab.WinRAR": "winrar",
+  "TeamViewer.TeamViewer": "teamviewer",
+  "teamviewer": "teamviewer",
+  "RealVNC.VNCViewer": "realvnc",
+  "rufus": "rufus",
+  "Rufus.Rufus": "rufus",
+  "bleachbit": "bleachbit",
+  "BleachBit.BleachBit": "bleachbit",
+  "rectangle": "macos",
+  "the-unarchiver": "macos",
+  "keka": "macos",
+  "appcleaner": "macos",
+  "raycast": "raycast",
+  "alfred": "alfred",
+  "qbittorrent": "qbittorrent",
+  "qBittorrent.qBittorrent": "qbittorrent",
+  "NVAccess.NVDA": "nvda",
+  "Malwarebytes.Malwarebytes": "malwarebytes",
+
+  // Gaming
+  "steam": "steam",
+  "Valve.Steam": "steam",
+  "lutris": "lutris",
+  "gamemode": "linux",
+  "mangohud": "opengl",
+  "discord": "discord",
+  "Discord.Discord": "discord",
+  "wine": "wine",
+  "winetricks": "wine",
+  "EpicGames.EpicGamesLauncher": "epicgames",
+  "epic-games": "epicgames",
+  "GOG.Galaxy": "gogdotcom",
+
+  // Productivity
+  "libreoffice": "libreoffice",
+  "TheDocumentFoundation.LibreOffice": "libreoffice",
+  "libreoffice-fresh": "libreoffice",
+  "thunderbird": "thunderbird",
+  "Mozilla.Thunderbird": "thunderbird",
+  "firefox": "firefox",
+  "Mozilla.Firefox": "firefox",
+  "chromium": "chromium",
+  "chromium-browser": "chromium",
+  "Google.Chrome": "googlechrome",
+  "google-chrome": "googlechrome",
+  "Microsoft.Edge": "microsoftedge",
+  "microsoft-edge": "microsoftedge",
+  "Brave.Brave": "brave",
+  "brave-browser": "brave",
+  "Opera.Opera": "opera",
+  "opera": "opera",
+  "zoom": "zoom",
+  "Zoom.Zoom": "zoom",
+  "microsoft-teams": "microsoftteams",
+  "Microsoft.Teams": "microsoftteams",
+  "slack": "slack",
+  "SlackTechnologies.Slack": "slack",
+  "notion": "notion",
+  "Notion.Notion": "notion",
+  "obsidian": "obsidian",
+  "Obsidian.Obsidian": "obsidian",
+  "foxitreader": "foxit",
+  "Foxit.FoxitReader": "foxit",
+  "adobe-acrobat-reader": "adobeacrobatreader",
+  "dropbox": "dropbox",
+  "Dropbox.Dropbox": "dropbox",
+  "onedrive": "microsoftonedrive",
+  "Microsoft.OneDrive": "microsoftonedrive",
+  "google-drive": "googledrive",
+  "evernote": "evernote",
+  "Evernote.Evernote": "evernote",
+  "evolution": "linux",
+  "focuswriter": "linux",
+
+  // Education
+  "anki": "anki",
+  "Anki.Anki": "anki",
+  "zotero": "zotero"
+};
+
+export function getPresetIcon(name: string): string | undefined {
+  // Try exact match
+  if (PACKAGE_ICONS[name]) {
+    return PACKAGE_ICONS[name];
+  }
+  
+  // Try case insensitive
+  const lowerName = name.toLowerCase();
+  const key = Object.keys(PACKAGE_ICONS).find(k => k.toLowerCase() === lowerName);
+  if (key) {
+    return PACKAGE_ICONS[key];
+  }
+
+  return undefined;
+}
+
 export function getPresetDetails(name: string): { description: string } {
   // Try exact match
   if (PRESET_DESCRIPTIONS[name]) {
