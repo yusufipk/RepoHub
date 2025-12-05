@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+// Button removed: replaced by infinite-scroll sentinel
 import { Checkbox } from '@/components/ui/checkbox'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Search, Monitor, Terminal, Package as PackageIcon } from 'lucide-react'
@@ -39,6 +39,10 @@ export function PackageBrowserV2({
   const isArch = useMemo(() => (selectedPlatform?.id || '') === 'arch', [selectedPlatform])
   const [scrollPosition, setScrollPosition] = useState(0)
   const searchInputRef = useRef<HTMLInputElement>(null)
+  const listContainerRef = useRef<HTMLDivElement | null>(null)
+  const bottomSentinelRef = useRef<HTMLDivElement | null>(null)
+  const scrollRafRef = useRef<number | null>(null)
+  const LOAD_MORE_THRESHOLD_PX = 400 // distance from bottom to trigger early load
 
   // Load packages when platform changes
   useEffect(() => {
@@ -152,8 +156,8 @@ export function PackageBrowserV2({
     return () => clearTimeout(timeoutId)
   }, [searchQuery, isDebianUbuntu, typeFilter, isArch, repositoryFilter, selectedPlatform])
 
-  // Load more packages
-  const loadMore = async () => {
+  // Load more packages (used by infinite scroll)
+  const loadMore = useCallback(async () => {
     if (!selectedPlatform || loadingMore || !hasMore) return
 
     setLoadingMore(true)
@@ -176,14 +180,48 @@ export function PackageBrowserV2({
       }
 
       const result = await apiClient.getPackages(params)
-      setPackages(prev => [...prev, ...result.packages])
-      setHasMore(packages.length + result.packages.length < result.total)
+      setPackages(prev => {
+        const combined = [...prev, ...result.packages]
+        setHasMore(combined.length < result.total)
+        return combined
+      })
     } catch (error) {
       console.error('Failed to load more packages:', error)
     } finally {
       setLoadingMore(false)
     }
-  }
+  }, [selectedPlatform, loadingMore, hasMore, packages.length, searchQuery, isDebianUbuntu, typeFilter, isArch, repositoryFilter])
+
+
+  // Trigger loadMore when user scrolls close to bottom (proximity check)
+  useEffect(() => {
+    const container = listContainerRef.current
+    if (!container) return
+
+    const onScroll = () => {
+      if (scrollRafRef.current) return
+      scrollRafRef.current = requestAnimationFrame(() => {
+        scrollRafRef.current = null
+        const distanceToBottom = container.scrollHeight - (container.scrollTop + container.clientHeight)
+        if (distanceToBottom <= LOAD_MORE_THRESHOLD_PX && !loadingMore && hasMore) {
+          loadMore()
+        }
+      })
+    }
+
+    container.addEventListener('scroll', onScroll, { passive: true })
+
+    // check immediately in case list is already short
+    onScroll()
+
+    return () => {
+      container.removeEventListener('scroll', onScroll)
+      if (scrollRafRef.current) {
+        cancelAnimationFrame(scrollRafRef.current)
+        scrollRafRef.current = null
+      }
+    }
+  }, [loadMore, loadingMore, hasMore])
 
   const isPackageSelected = (pkg: Package) => {
     return selectedPackages.some(selected => selected.id === pkg.id)
@@ -295,7 +333,7 @@ export function PackageBrowserV2({
           </div>
 
           {/* Package List */}
-          <div className="space-y-2 max-h-96 overflow-y-auto min-h-[400px]">
+          <div ref={listContainerRef} className="space-y-2 max-h-96 overflow-y-auto min-h-[400px]">
             {loading && packages.length === 0 ? (
               // Skeleton loading to prevent layout shift
               Array.from({ length: 10 }).map((_, index) => (
@@ -362,24 +400,16 @@ export function PackageBrowserV2({
               ))
             )}
 
-            {/* Load More Button */}
-            {hasMore && (
-              <div className="text-center py-4">
-                <Button
-                  variant="outline"
-                  onClick={loadMore}
-                  disabled={loadingMore}
-                  className="min-w-32"
-                >
-                  {loadingMore ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary mr-2"></div>
-                      Loading...
-                    </>
-                  ) : (
-                    `Load More (${Math.min(50, totalCount - packages.length)} remaining)`
-                  )}
-                </Button>
+            {/* Infinite scroll sentinel */}
+            <div ref={bottomSentinelRef} />
+
+            {/* Small loading indicator when fetching more */}
+            {loadingMore && (
+              <div className="text-center py-4 text-muted-foreground">
+                <div className="inline-flex items-center">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary mr-2"></div>
+                  Loading more...
+                </div>
               </div>
             )}
           </div>

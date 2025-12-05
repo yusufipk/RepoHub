@@ -32,7 +32,7 @@ export function RecommendationsSection({
     profile
 }: RecommendationsSectionProps) {
     const { t } = useLocale()
-    
+
     // Derived state from props
     const getEffectiveOS = () => profile.selectedOS || profile.detectedOS || "ubuntu"
     const isProfileComplete = () => profile.categories.length > 0 && getEffectiveOS() !== "unknown"
@@ -132,7 +132,7 @@ export function RecommendationsSection({
 
     return (
         <Card className="w-full">
-            <CardHeader className="cursor-pointer hover:bg-accent/50 transition-colors" onClick={() => setIsExpanded(!isExpanded)}>
+            <CardHeader className="cursor-pointer hover:bg-accent/50 transition-colors mb-4" onClick={() => setIsExpanded(!isExpanded)}>
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div className="flex items-center gap-2">
                         <Sparkles className="h-5 w-5 text-primary" />
