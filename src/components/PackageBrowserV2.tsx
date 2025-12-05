@@ -323,7 +323,7 @@ export function PackageBrowserV2({
                 >
                   <Checkbox
                     checked={isPackageSelected(pkg)}
-                    onCheckedChange={() => onPackageToggle(pkg)}
+                    onChange={() => onPackageToggle(pkg)}
                   />
                   <div className="flex items-start space-x-2 flex-1">
                     <div className="mt-0.5">
