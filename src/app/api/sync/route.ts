@@ -3,6 +3,8 @@ import { PackageFetcherV2 } from '@/services/packageFetcherV2'
 import { ArchPackageFetcher } from '@/services/archPackageFetcher'
 import { AurPackageFetcher } from '@/services/aurPackageFetcher'
 import { FedoraPackageFetcher } from '@/services/fedoraPackageFetcher'
+import { OpenSUSEPackageFetcher } from '@/services/opensusePackageFetcher'
+import { GentooPackageFetcher } from '@/services/gentooPackageFetcher'
 import { WingetPackageFetcher } from '@/services/wingetPackageFetcher'
 import { HomebrewPackageFetcher } from '@/services/homebrewPackageFetcher'
 import { PlatformInitializer } from '@/services/platformInitializer'
@@ -137,6 +139,20 @@ export async function POST(request: NextRequest) {
           return `macOS (Homebrew) packages synced (${packages.length})`
         }
 
+        case 'opensuse': {
+          const fetcher = new OpenSUSEPackageFetcher()
+          const packages = await fetcher.fetchAllPackages()
+          await fetcher.storePackages(packages)
+          return `openSUSE packages synced (${packages.length})`
+        }
+
+        case 'gentoo': {
+          const fetcher = new GentooPackageFetcher()
+          const packages = await fetcher.fetchAllPackages()
+          await fetcher.storePackages(packages)
+          return `Gentoo packages synced (${packages.length})`
+        }
+
         default:
           throw new Error(`Unknown platform: ${target}`)
       }
@@ -144,7 +160,7 @@ export async function POST(request: NextRequest) {
 
     if (platform === 'all' || platform === 'all-simple' || platform === 'all-official') {
       // Sync all platforms
-      const platforms = ['debian', 'ubuntu', 'arch', 'fedora', 'windows', 'macos']
+      const platforms = ['debian', 'ubuntu', 'arch', 'fedora', 'opensuse', 'gentoo', 'windows', 'macos']
       const resultsList = []
 
       for (const p of platforms) {
@@ -186,7 +202,7 @@ export async function GET() {
     return NextResponse.json({
       status: 'ready',
       last_sync: null,
-      platforms: ['debian', 'ubuntu', 'arch', 'fedora', 'windows', 'macos'],
+      platforms: ['debian', 'ubuntu', 'arch', 'fedora', 'opensuse', 'gentoo', 'windows', 'macos'],
       sync_config: {
         server_only: process.env.SYNC_SERVER_ONLY === 'true',
         auto_sync_enabled: SyncAuth.isAutoSyncEnabled(),

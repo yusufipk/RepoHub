@@ -112,6 +112,8 @@ INSERT INTO platforms (id, name, package_manager, icon) VALUES
 ('ubuntu', 'Ubuntu/Debian', 'apt', '🐧'),
 ('fedora', 'Fedora', 'dnf', '🎩'),
 ('arch', 'Arch Linux', 'pacman', '🏛️'),
+('opensuse', 'openSUSE', 'zypper', '🦎'),
+('gentoo', 'Gentoo', 'emerge', '🗜️'),
 ('windows', 'Windows', 'winget', '🪟'),
 ('macos', 'macOS', 'homebrew', '🍎');
 
