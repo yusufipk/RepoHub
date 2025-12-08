@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button'
 import { GeneratedScript, SelectedPackage, Platform } from '@/types'
 import { Download, Copy, Check, Terminal, Shield } from 'lucide-react'
 import { useLocale } from '@/contexts/LocaleContext'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 interface ScriptPreviewProps {
   generatedScript: GeneratedScript | null
@@ -158,9 +160,22 @@ export function ScriptPreview({
               </div>
             </div>
             <div className="relative">
-              <pre className="bg-muted p-4 rounded-lg text-sm overflow-x-auto max-h-64 overflow-y-auto">
-                <code>{generatedScript.script}</code>
-              </pre>
+              <SyntaxHighlighter
+                language={getScriptLanguage()}
+                style={vscDarkPlus}
+                customStyle={{
+                  margin: 0,
+                  padding: '1rem',
+                  fontSize: '0.875rem',
+                  maxHeight: '16rem',
+                  borderRadius: '0.5rem',
+                  background: 'hsl(var(--muted))'
+                }}
+                showLineNumbers={false}
+                wrapLines={true}
+              >
+                {generatedScript.script}
+              </SyntaxHighlighter>
             </div>
           </div>
 
