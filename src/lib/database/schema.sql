@@ -109,7 +109,8 @@ CREATE TRIGGER update_packages_updated_at BEFORE UPDATE ON packages
 
 -- Initial data
 INSERT INTO platforms (id, name, package_manager, icon) VALUES
-('ubuntu', 'Ubuntu/Debian', 'apt', '🐧'),
+('debian', 'Debian', 'apt', '🌀'),
+('ubuntu', 'Ubuntu', 'apt', '🐧'),
 ('fedora', 'Fedora', 'dnf', '🎩'),
 ('arch', 'Arch Linux', 'pacman', '🏛️'),
 ('windows', 'Windows', 'winget', '🪟'),
