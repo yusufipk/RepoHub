@@ -29,13 +29,95 @@ RepoHub, farklı işletim sistemlerinde paket keşfi ve kurulumu için birleşik
 
 ## 🏁 Başlangıç
 
-### Gereksinimler
+### Seçenek 1: Docker ile Kurulum (Önerilen) 🐳
+
+Docker kullanarak projeyi hızlı bir şekilde başlatabilirsiniz. Bu yöntem tüm bağımlılıkları otomatik olarak kurar ve yapılandırır.
+
+#### Gereksinimler
+-   Docker
+-   Docker Compose
+
+#### Adımlar
+
+1.  **Depoyu klonlayın:**
+    ```bash
+    git clone https://github.com/yusufipk/RepoHub.git
+    cd RepoHub
+    ```
+
+2.  **Ortam değişkenlerini ayarlayın:**
+    ```bash
+    cp .env.example .env
+    ```
+    
+    `.env` dosyasını ihtiyacınıza göre düzenleyebilirsiniz (varsayılan ayarlar çoğu durumda yeterlidir).
+
+3.  **Production ortamını başlatın:**
+    ```bash
+    docker-compose up -d
+    ```
+    
+    Bu komut:
+    - PostgreSQL veritabanını başlatır
+    - Next.js uygulamasını build eder ve başlatır
+    - Veritabanı şemasını otomatik olarak oluşturur
+    - Tüm migrasyonları uygular
+
+4.  **Uygulamaya erişin:**
+    
+    Tarayıcınızda [http://localhost:3002](http://localhost:3002) adresini açın.
+
+#### Yararlı Docker Komutları
+
+```bash
+# Logları görüntüle
+docker-compose logs -f
+
+# Sadece veritabanı logları
+docker-compose logs -f postgres
+
+# Sadece uygulama logları
+docker-compose logs -f app
+
+# Containerları durdur
+docker-compose down
+
+# Containerları ve volumeleri sil (veritabanı verilerini siler!)
+docker-compose down -v
+
+# Uygulamayı yeniden build et
+docker-compose up -d --build
+
+# Container içinde komut çalıştır
+docker-compose exec app sh
+docker-compose exec postgres psql -U repohub_user -d repohub
+```
+
+#### Development Ortamı için Docker
+
+Geliştirme yaparken sadece veritabanını Docker'da çalıştırıp, uygulamayı lokal olarak çalıştırabilirsiniz:
+
+```bash
+# Sadece veritabanını başlat
+docker-compose -f docker-compose.dev.yml up -d
+
+# .env dosyasında DB_HOST=localhost olarak ayarlayın
+# Ardından local olarak çalıştırın
+pnpm install
+pnpm dev
+```
+
+Bu yaklaşım hot-reload özelliğini kullanmanızı sağlar ve geliştirme deneyimini iyileştirir.
+
+### Seçenek 2: Manuel Kurulum
+
+#### Gereksinimler
 
 -   Node.js 18+
 -   pnpm
--   Docker (isteğe bağlı, veritabanı için)
+-   PostgreSQL 12+
 
-### Kurulum
+#### Adımlar
 
 1.  **Depoyu klonlayın:**
     ```bash
