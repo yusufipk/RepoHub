@@ -29,13 +29,95 @@ RepoHub provides a unified interface for package discovery and installation acro
 
 ## 🏁 Getting Started
 
-### Prerequisites
+### Option 1: Docker Installation (Recommended) 🐳
+
+You can quickly start the project using Docker. This method automatically installs and configures all dependencies.
+
+#### Prerequisites
+-   Docker
+-   Docker Compose
+
+#### Steps
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/yusufipk/RepoHub.git
+    cd RepoHub
+    ```
+
+2.  **Set up environment variables:**
+    ```bash
+    cp .env.example .env
+    ```
+    
+    You can edit the `.env` file according to your needs (default settings are sufficient in most cases).
+
+3.  **Start the production environment:**
+    ```bash
+    docker-compose up -d
+    ```
+    
+    This command will:
+    - Start the PostgreSQL database
+    - Build and start the Next.js application
+    - Automatically create the database schema
+    - Apply all migrations
+
+4.  **Access the application:**
+    
+    Open [http://localhost:3002](http://localhost:3002) in your browser.
+
+#### Useful Docker Commands
+
+```bash
+# View logs
+docker-compose logs -f
+
+# Database logs only
+docker-compose logs -f postgres
+
+# Application logs only
+docker-compose logs -f app
+
+# Stop containers
+docker-compose down
+
+# Remove containers and volumes (deletes database data!)
+docker-compose down -v
+
+# Rebuild the application
+docker-compose up -d --build
+
+# Run commands inside containers
+docker-compose exec app sh
+docker-compose exec postgres psql -U repohub_user -d repohub
+```
+
+#### Docker for Development
+
+When developing, you can run only the database in Docker and run the application locally:
+
+```bash
+# Start only the database
+docker-compose -f docker-compose.dev.yml up -d
+
+# Set DB_HOST=localhost in your .env file
+# Then run locally
+pnpm install
+pnpm dev
+```
+
+This approach allows you to use hot-reload and improves the development experience.
+
+### Option 2: Manual Installation
+
+#### Prerequisites
 
 -   Node.js 18+
 -   pnpm
--   Docker (optional, for database)
+-   PostgreSQL 12+
 
-### Installation
+#### Steps
 
 1.  **Clone the repository:**
     ```bash

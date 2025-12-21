@@ -72,6 +72,8 @@ jspm_packages/
 .env.test.local
 .env.production.local
 .env.local
+!.env.example
+!.env.*.example
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -133,8 +135,8 @@ Thumbs.db
 *.sqlite3
 *.db
 
-# Docker
-.dockerignore
+# Docker volumes
+docker-data/
 
 # Kubernetes
 *.kubeconfig
