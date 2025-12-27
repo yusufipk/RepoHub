@@ -220,7 +220,7 @@ export function PackageBrowser({
                 <div className="flex items-start space-x-3">
                   <Checkbox
                     checked={isPackageSelected(pkg)}
-                    onCheckedChange={() => onPackageToggle(pkg)}
+                    onChange={() => onPackageToggle(pkg)}
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center space-x-2 mb-1">
