@@ -50,6 +50,8 @@ export function useTheme() {
     if (theme === 'light') {
       setThemeMode('dark')
     } else if (theme === 'dark') {
+      setThemeMode('system')
+    } else if (theme === 'system') {
       setThemeMode('light')
     } else {
       setThemeMode(isDark ? 'light' : 'dark')
