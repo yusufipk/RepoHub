@@ -3,11 +3,10 @@ import { UserCategory } from "@/types/recommendations";
 /**
  * Curated package recommendations for each platform and category
  * Simple structure: Platform → Category → Package names
- * 
- * Edit this file to add/remove packages for each platform/category combination
+ * * Edit this file to add/remove packages for each platform/category combination
  */
 
-type PlatformId = "windows" | "macos" | "ubuntu" | "debian" | "arch" | "fedora";
+type PlatformId = "windows" | "macos" | "ubuntu" | "debian" | "kali" | "arch" | "fedora" | "opensuse" | "solus" | "void";
 
 export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>> = {
   "windows": {
@@ -24,7 +23,10 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
       "WinMerge.WinMerge",
       "EclipseFoundation.Eclipse",
       "Anysphere.Cursor",
-      "Microsoft.VisualStudio.2022.Community"
+      "Microsoft.VisualStudio.2022.Community",
+      "Python.Python.3",
+      "Alacritty.Alacritty",
+      "Kitty.Kitty"
     ],
     "design": [
       "GIMP.GIMP",
@@ -71,7 +73,12 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
       "NVAccess.NVDA",
       "Malwarebytes.Malwarebytes",
       "SUPERAntiSpyware.SUPERAntiSpyware",
-      "qBittorrent.qBittorrent"
+      "qBittorrent.qBittorrent",
+      "Gyan.FFmpeg",
+      "Bremensson.Fastfetch",
+      "Insecure.Nmap",
+      "WiresharkFoundation.Wireshark",
+      "Ventoy.Ventoy"
     ],
     "gaming": [
       "Valve.Steam",
@@ -121,7 +128,9 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
       "cyberduck",
       "meld",
       "dotnet-sdk",
-      "temurin"
+      "temurin",
+      "alacritty",
+      "kitty"
     ],
     "design": [
       "gimp",
@@ -150,7 +159,9 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
       "malwarebytes",
       "raycast",
       "alfred",
-      "qbittorrent"
+      "qbittorrent",
+      "nmap",
+      "wireshark"
     ],
     "gaming": [
       "steam",
@@ -191,7 +202,10 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
       "npm",
       "python3-pip",
       "docker.io",
-      "dotnet-sdk-8.0"
+      "dotnet-sdk-8.0",
+      "build-essential",
+      "alacritty",
+      "kitty"
     ],
     "design": [
       "gimp",
@@ -214,7 +228,16 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
       "timeshift",
       "stacer",
       "keepassxc",
-      "synaptic"
+      "synaptic",
+      "fastfetch",
+      "tmux",
+      "zsh",
+      "htop",
+      "gparted",
+      "nmap",
+      "wireshark",
+      "aircrack-ng",
+      "ventoy"
     ],
     "gaming": [
       "steam",
@@ -224,7 +247,6 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
     "productivity": [
       "libreoffice",
       "chromium-browser",
-      "evolution",
       "focuswriter"
     ],
     "education": [
@@ -241,7 +263,9 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
       "npm",
       "python3",
       "python3-pip",
-      "docker.io"
+      "docker.io",
+      "alacritty",
+      "kitty"
     ],
     "design": [
       "gimp",
@@ -263,7 +287,11 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
       "zsh",
       "gparted",
       "timeshift",
-      "keepassxc"
+      "keepassxc",
+      "nmap",
+      "wireshark",
+      "aircrack-ng",
+      "ventoy"
     ],
     "gaming": [
       "steam",
@@ -280,6 +308,53 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
     "education": [
     ]
   },
+  "kali": {
+    "development": [
+      "git",
+      "build-essential",
+      "curl",
+      "wget",
+      "nodejs",
+      "npm",
+      "python3",
+      "python3-pip",
+      "alacritty",
+      "kitty"
+    ],
+    "design": [
+      "gimp",
+      "inkscape",
+      "blender"
+    ],
+    "multimedia": [
+      "vlc",
+      "audacity",
+      "obs-studio",
+      "ffmpeg"
+    ],
+    "system-tools": [
+      "htop",
+      "fastfetch",
+      "tmux",
+      "zsh",
+      "gparted",
+      "keepassxc",
+      "nmap",
+      "wireshark",
+      "aircrack-ng",
+      "ventoy"
+    ],
+    "gaming": [
+      "steam"
+    ],
+    "productivity": [
+      "libreoffice",
+      "chromium",
+      "firefox-esr"
+    ],
+    "education": [
+    ]
+  },
   "arch": {
     "development": [
       "git",
@@ -288,7 +363,12 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
       "nodejs",
       "npm",
       "python-pip",
-      "jdk17-openjdk"
+      "jdk17-openjdk",
+      "docker",
+      "python",
+      "alacritty",
+      "kitty",
+      "archiso"
     ],
     "design": [
       "gimp",
@@ -314,7 +394,12 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
       "timeshift",
       "keepassxc",
       "reflector",
-      "pacman-contrib"
+      "pacman-contrib",
+      "neofetch",
+      "nmap",
+      "wireshark-qt",
+      "aircrack-ng",
+      "ventoy"
     ],
     "gaming": [
       "steam",
@@ -344,7 +429,13 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
       "python3",
       "python3-pip",
       "java-17-openjdk-devel",
-      "dotnet-sdk-8.0"
+      "dotnet-sdk-8.0",
+      "gcc",
+      "gcc-c++",
+      "make",
+      "docker-ce",
+      "alacritty",
+      "kitty"
     ],
     "design": [
       "gimp",
@@ -366,7 +457,12 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
       "zsh",
       "gparted",
       "keepassxc",
-      "dnf-plugins-core"
+      "dnf-plugins-core",
+      "neofetch",
+      "nmap",
+      "wireshark",
+      "aircrack-ng",
+      "ventoy"
     ],
     "gaming": [
       "lutris",
@@ -379,8 +475,168 @@ export const PACKAGE_PRESETS: Record<PlatformId, Record<UserCategory, string[]>>
       "firefox",
       "chromium"
     ],
-    "education": []
+    "education": [
+      "anki"
+    ]
   },
+  "opensuse": {
+    "development": [
+      "git",
+      "curl",
+      "wget",
+      "nodejs",
+      "npm",
+      "python3-pip",
+      "docker",
+      "patterns-devel-base-devel_basis",
+      "alacritty",
+      "kitty"
+    ],
+    "design": [
+      "gimp",
+      "inkscape",
+      "blender",
+      "krita"
+    ],
+    "multimedia": [
+      "vlc",
+      "audacity",
+      "obs-studio",
+      "ffmpeg",
+      "mpv"
+    ],
+    "system-tools": [
+      "htop",
+      "fastfetch",
+      "tmux",
+      "zsh",
+      "gparted",
+      "keepassxc",
+      "neofetch",
+      "nmap",
+      "wireshark",
+      "aircrack-ng",
+      "ventoy"
+    ],
+    "gaming": [
+      "steam",
+      "lutris",
+      "mangohud"
+    ],
+    "productivity": [
+      "libreoffice",
+      "thunderbird",
+      "firefox",
+      "chromium"
+    ],
+    "education": [
+      "anki"
+    ]
+  },
+  "solus": {
+    "development": [
+      "git",
+      "curl",
+      "wget",
+      "nodejs",
+      "python3",
+      "system.devel",
+      "alacritty",
+      "kitty"
+    ],
+    "design": [
+      "gimp",
+      "inkscape",
+      "blender",
+      "krita"
+    ],
+    "multimedia": [
+      "vlc",
+      "audacity",
+      "obs-studio",
+      "ffmpeg",
+      "mpv"
+    ],
+    "system-tools": [
+      "htop",
+      "fastfetch",
+      "tmux",
+      "zsh",
+      "gparted",
+      "keepassxc",
+      "neofetch",
+      "nmap",
+      "wireshark",
+      "aircrack-ng"
+    ],
+    "gaming": [
+      "steam",
+      "lutris",
+      "mangohud"
+    ],
+    "productivity": [
+      "libreoffice",
+      "thunderbird",
+      "firefox",
+      "chromium"
+    ],
+    "education": [
+      "anki"
+    ]
+  },
+  "void": {
+    "development": [
+      "git",
+      "curl",
+      "wget",
+      "nodejs",
+      "python3",
+      "python3-pip",
+      "base-devel",
+      "alacritty",
+      "kitty"
+    ],
+    "design": [
+      "gimp",
+      "inkscape",
+      "blender",
+      "krita"
+    ],
+    "multimedia": [
+      "vlc",
+      "audacity",
+      "obs-studio",
+      "ffmpeg",
+      "mpv"
+    ],
+    "system-tools": [
+      "htop",
+      "fastfetch",
+      "tmux",
+      "zsh",
+      "gparted",
+      "keepassxc",
+      "neofetch",
+      "nmap",
+      "wireshark",
+      "aircrack-ng",
+      "ventoy"
+    ],
+    "gaming": [
+      "steam",
+      "lutris",
+      "mangohud"
+    ],
+    "productivity": [
+      "libreoffice",
+      "thunderbird",
+      "firefox",
+      "chromium"
+    ],
+    "education": [
+      "anki"
+    ]
+  }
 };
 
 /**
@@ -448,10 +704,24 @@ export const PRESET_DESCRIPTIONS: Record<string, string> = {
   "warp": "AI-powered terminal",
   "sublime-text": "Sophisticated text editor for code, markup and prose",
   "build-essential": "Informational list of build-essential packages",
-  "base-devel": "Basic tools to build Arch Linux packages",
+  "base-devel": "Basic tools to build software packages",
+  "system.devel": "Solus system development component meta-package",
+  "patterns-devel-base-devel_basis": "Base development pattern for openSUSE",
   "java-17-openjdk-devel": "OpenJDK 17 Development Kit",
   "jdk17-openjdk": "OpenJDK 17 Development Kit",
   "temurin": "Eclipse Temurin Java SE binaries",
+  "Python.Python.3": "Python programming language interpreter",
+  "gcc": "GNU Compiler Collection",
+  "gcc-c++": "GNU C++ Compiler",
+  "make": "GNU macro processor to generate executables",
+  "docker-ce": "Docker Community Edition",
+  "python": "Next generation of the python high-level scripting language",
+  "docker": "Pack, ship and run any application as a lightweight container",
+  "alacritty": "A cross-platform, OpenGL-accelerated terminal emulator",
+  "Alacritty.Alacritty": "A cross-platform, OpenGL-accelerated terminal emulator",
+  "kitty": "Cross-platform, fast, feature-rich, GPU based terminal emulator",
+  "Kitty.Kitty": "Cross-platform, fast, feature-rich, GPU based terminal emulator",
+  "archiso": "Tools for creating Arch Linux live CD/USB ISO images",
 
   // Design
   "gimp": "GNU Image Manipulation Program",
@@ -523,6 +793,18 @@ export const PRESET_DESCRIPTIONS: Record<string, string> = {
   "alfred": "Productivity app for macOS",
   "qbittorrent": "BitTorrent client",
   "qBittorrent.qBittorrent": "BitTorrent client",
+  "NVAccess.NVDA": "nvda",
+  "Malwarebytes.Malwarebytes": "malwarebytes",
+  "Gyan.FFmpeg": "Complete, cross-platform solution to record, convert and stream audio and video",
+  "Bremensson.Fastfetch": "Like neofetch, but much faster and highly customizable",
+  "Insecure.Nmap": "Network exploration tool and security / port scanner",
+  "WiresharkFoundation.Wireshark": "Network traffic analyzer",
+  "nmap": "Network exploration tool and security / port scanner",
+  "wireshark": "Network traffic analyzer",
+  "wireshark-qt": "Network traffic analyzer",
+  "aircrack-ng": "WiFi 802.11 WEP and WPA-PSK key cracking program",
+  "ventoy": "An open source tool to create bootable USB drive for ISO files",
+  "Ventoy.Ventoy": "An open source tool to create bootable USB drive for ISO files",
 
   // Gaming
   "steam": "Digital distribution platform for video games",
@@ -611,6 +893,8 @@ export const PACKAGE_ICONS: Record<string, string> = {
   "sublime-text": "sublimetext",
   "build-essential": "linux",
   "base-devel": "archlinux",
+  "system.devel": "solus",
+  "patterns-devel-base-devel_basis": "opensuse",
   "java-17-openjdk-devel": "openjdk",
   "jdk17-openjdk": "openjdk",
   "temurin": "eclipse",
@@ -619,6 +903,18 @@ export const PACKAGE_ICONS: Record<string, string> = {
   "EclipseFoundation.Eclipse": "eclipse",
   "WinSCP.WinSCP": "winscp",
   "PuTTY.PuTTY": "putty",
+  "Python.Python.3": "python",
+  "gcc": "gnu",
+  "gcc-c++": "gnu",
+  "make": "gnu",
+  "docker-ce": "docker",
+  "python": "python",
+  "docker": "docker",
+  "alacritty": "alacritty",
+  "Alacritty.Alacritty": "alacritty",
+  "kitty": "kitty",
+  "Kitty.Kitty": "kitty",
+  "archiso": "archlinux",
 
   // Design
   "gimp": "gimp",
@@ -633,7 +929,7 @@ export const PACKAGE_ICONS: Record<string, string> = {
   "xnviewmp": "xnview",
   "XnSoft.XnViewMP": "xnview",
   "IrfanSkiljan.IrfanView": "irfanview",
-  "FastStone.Viewer": "imagej", // Placeholder, no icon
+  "FastStone.Viewer": "imagej",
   "ShareX.ShareX": "sharex",
   "Greenshot.Greenshot": "greenshot",
 
@@ -692,6 +988,16 @@ export const PACKAGE_ICONS: Record<string, string> = {
   "qBittorrent.qBittorrent": "qbittorrent",
   "NVAccess.NVDA": "nvda",
   "Malwarebytes.Malwarebytes": "malwarebytes",
+  "Gyan.FFmpeg": "ffmpeg",
+  "Bremensson.Fastfetch": "linux",
+  "Insecure.Nmap": "nmap",
+  "WiresharkFoundation.Wireshark": "wireshark",
+  "nmap": "nmap",
+  "wireshark": "wireshark",
+  "wireshark-qt": "wireshark",
+  "aircrack-ng": "aircrackng",
+  "ventoy": "linux",
+  "Ventoy.Ventoy": "windows",
 
   // Gaming
   "steam": "steam",
@@ -755,12 +1061,10 @@ export const PACKAGE_ICONS: Record<string, string> = {
 };
 
 export function getPresetIcon(name: string): string | undefined {
-  // Try exact match
   if (PACKAGE_ICONS[name]) {
     return PACKAGE_ICONS[name];
   }
 
-  // Try case insensitive
   const lowerName = name.toLowerCase();
   const key = Object.keys(PACKAGE_ICONS).find(k => k.toLowerCase() === lowerName);
   if (key) {
@@ -771,12 +1075,10 @@ export function getPresetIcon(name: string): string | undefined {
 }
 
 export function getPresetDetails(name: string): { description: string } {
-  // Try exact match
   if (PRESET_DESCRIPTIONS[name]) {
     return { description: PRESET_DESCRIPTIONS[name] };
   }
 
-  // Try case insensitive
   const lowerName = name.toLowerCase();
   const key = Object.keys(PRESET_DESCRIPTIONS).find(k => k.toLowerCase() === lowerName);
   if (key) {

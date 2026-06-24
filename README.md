@@ -8,7 +8,7 @@ RepoHub provides a unified interface for package discovery and installation acro
 
 ## 🚀 Features
 
--   **Cross-Platform Support**: Works on Linux (Debian, Ubuntu, Arch, Fedora), Windows, and macOS.
+-   **Cross-Platform Support**: Works on Linux (Debian, Ubuntu, Arch, Fedora, Kali, Solus, Void), Windows, and macOS.
 -   **Official Repositories**: Access software strictly from trusted, official sources.
 -   **Package Icons**: Visual icons for popular packages for easy recognition.
 -   **Script Generation**: Generate idempotent installation scripts for your selected platform.

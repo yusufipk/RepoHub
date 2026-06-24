@@ -8,7 +8,7 @@ RepoHub, farklı işletim sistemlerinde paket keşfi ve kurulumu için birleşik
 
 ## 🚀 Özellikler
 
--   **Çok Platformlu Destek**: Linux (Debian, Ubuntu, Arch, Fedora), Windows ve macOS'te çalışır.
+-   **Çok Platformlu Destek**: Linux (Debian, Ubuntu, Arch, Fedora, Kali, Solus, Void), Windows ve macOS'te çalışır.
 -   **Resmi Depolar**: Yazılımlara yalnızca güvenilir, resmi kaynaklardan erişin.
 -   **Script Oluşturma**: Seçtiğiniz platform için idempotent kurulum scriptleri oluşturun.
 -   **Akıllı Filtreleme**: Paketleri verimli bir şekilde bulun ve filtreleyin.
