@@ -85,7 +85,7 @@ const translations = {
         onetime_cmd: "powershell -ExecutionPolicy Bypass -File .\\install-packages-windows.ps1",
         unblock_title: "If Windows blocked the file, unblock it:",
         unblock_cmd: "Unblock-File -Path .\\install-packages-windows.ps1",
-        winget_title: "If winget is not found, install 'App Installer' and re-run the script:",
+        winget_title: "winget is preferred; if it is unavailable or a package fails, Chocolatey is used when installed. If neither is found, install 'App Installer' or Chocolatey and re-run the script:",
         store_link_label: "Store link",
         direct_link_label: "Direct link"
       }
@@ -279,7 +279,7 @@ const translations = {
         onetime_cmd: "powershell -ExecutionPolicy Bypass -File .\\install-packages-windows.ps1",
         unblock_title: "Windows dosyayı engellediyse, engeli kaldırın:",
         unblock_cmd: "Unblock-File -Path .\\install-packages-windows.ps1",
-        winget_title: "winget bulunamazsa, 'App Installer'ı yükleyin ve scripti tekrar çalıştırın:",
+        winget_title: "winget tercih edilir; bulunamazsa veya bir paket başarısız olursa kuruluysa Chocolatey kullanılır. İkisi de yoksa 'App Installer'ı ya da Chocolatey'yi yükleyip scripti tekrar çalıştırın:",
         store_link_label: "Mağaza bağlantısı",
         direct_link_label: "Doğrudan bağlantı"
       }
