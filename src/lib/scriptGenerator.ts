@@ -177,11 +177,15 @@ if (-not $isAdmin) {
     Write-Warning "It's recommended to run this script as Administrator for best results."
 }
 
-# Ensure winget is available
-if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
-    Write-Warning 'Windows Package Manager (winget) is not installed.'
+# Detect the available Windows package managers. Chocolatey is a fallback for
+# machines where winget is unavailable or cannot resolve a package.
+$hasWinget = $null -ne (Get-Command winget -ErrorAction SilentlyContinue)
+$hasChocolatey = $null -ne (Get-Command choco -ErrorAction SilentlyContinue)
+
+if (-not $hasWinget -and -not $hasChocolatey) {
+    Write-Warning 'Neither winget nor Chocolatey is installed.'
     Write-Host "We'll open the Microsoft Store page for 'App Installer' (includes winget)."
-    Write-Host 'After installation completes, please re-run this script.'
+    Write-Host 'After installation completes, re-run this script. Alternatively install Chocolatey from https://chocolatey.org/install.'
     try {
         Start-Process "ms-windows-store://pdp/?productId=9NBLGGH4NNS1"
     } catch {
@@ -190,22 +194,51 @@ if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
     exit 1
 }
 
-# Install packages using winget
+if ($hasWinget) {
+    Write-Host 'winget detected; it will be preferred for installation.'
+}
+if ($hasChocolatey) {
+    Write-Host 'Chocolatey detected; it will be used when winget is unavailable or fails.'
+}
+
 Write-Host 'Installing packages: ${packageNames}'
 
 $packages = @(${packages.map(p => `'${p.name}'`).join(', ')})
 
 foreach ($package in $packages) {
     Write-Host "Installing $package..."
-    try {
-        winget install --id $package --accept-package-agreements --accept-source-agreements -e
-        if ($LASTEXITCODE -ne 0) {
-            Write-Host "[ERROR] $package installation failed with exit code $LASTEXITCODE"
-        } else {
-            Write-Host "[OK] $package installed successfully"
+    $installed = $false
+
+    if ($hasWinget) {
+        try {
+            winget install --id $package --accept-package-agreements --accept-source-agreements -e
+            if ($LASTEXITCODE -eq 0) {
+                Write-Host "[OK] $package installed successfully with winget"
+                $installed = $true
+            } else {
+                Write-Warning "winget could not install $package (exit code $LASTEXITCODE)."
+            }
+        } catch {
+            Write-Warning "winget failed for $package: $_"
         }
-    } catch {
-        Write-Host "[ERROR] $package installation failed: $_"
+    }
+
+    if (-not $installed -and $hasChocolatey) {
+        try {
+            choco install $package --yes --no-progress
+            if ($LASTEXITCODE -eq 0) {
+                Write-Host "[OK] $package installed successfully with Chocolatey"
+                $installed = $true
+            } else {
+                Write-Warning "Chocolatey could not install $package (exit code $LASTEXITCODE)."
+            }
+        } catch {
+            Write-Warning "Chocolatey failed for $package: $_"
+        }
+    }
+
+    if (-not $installed) {
+        Write-Host "[ERROR] $package installation failed with all available package managers"
     }
 }
 

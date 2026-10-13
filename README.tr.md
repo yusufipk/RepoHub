@@ -11,6 +11,7 @@ RepoHub, farklı işletim sistemlerinde paket keşfi ve kurulumu için birleşik
 -   **Çok Platformlu Destek**: Linux (Debian, Ubuntu, Arch, Fedora), Windows ve macOS'te çalışır.
 -   **Resmi Depolar**: Yazılımlara yalnızca güvenilir, resmi kaynaklardan erişin.
 -   **Script Oluşturma**: Seçtiğiniz platform için idempotent kurulum scriptleri oluşturun.
+-   **Windows Alternatifi**: Oluşturulan PowerShell scriptleri winget'i tercih eder; winget yoksa veya paket kurulumu başarısız olursa Chocolatey'ye geçer.
 -   **Akıllı Filtreleme**: Paketleri verimli bir şekilde bulun ve filtreleyin.
 -   **Paket İkonları**: Popüler paketler için görsel ikonlar ile kolay tanıma.
 

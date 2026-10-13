@@ -12,6 +12,7 @@ RepoHub provides a unified interface for package discovery and installation acro
 -   **Official Repositories**: Access software strictly from trusted, official sources.
 -   **Package Icons**: Visual icons for popular packages for easy recognition.
 -   **Script Generation**: Generate idempotent installation scripts for your selected platform.
+-   **Windows Fallback**: Generated PowerShell scripts prefer winget and fall back to Chocolatey when winget is unavailable or cannot install a package.
 -   **Smart Filtering**: efficiently browse and filter packages.
 
 ## 🛠️ Technology Stack
